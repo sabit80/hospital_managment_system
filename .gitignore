@@ -1,0 +1,23 @@
+# Maven
+target/
+.classpath
+.project
+.settings/
+*.jar
+*.war
+*.ear
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Dependencies
+node_modules/
+
+# Build output
+*.class
+*.log
