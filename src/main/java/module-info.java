@@ -5,6 +5,7 @@ module com.hms {
 
     opens com.hms to javafx.fxml;
     opens com.hms.controller to javafx.fxml;
+    opens com.hms.views to javafx.fxml;
     
     exports com.hms;
     exports com.hms.controller;
