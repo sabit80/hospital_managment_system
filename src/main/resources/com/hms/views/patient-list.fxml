@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" style="-fx-padding: 15;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hms.controller.PatientController">
+    
+    <!-- Search Section -->
+    <HBox spacing="10" style="-fx-alignment: CENTER_LEFT;">
+        <TextField fx:id="searchField" promptText="Search by name or phone..." style="-fx-font-size: 12;" prefWidth="250" />
+        <Button text="Search" onAction="#handleSearch" style="-fx-padding: 8 20;" />
+        <Button text="Add Patient" onAction="#handleAddPatient" style="-fx-padding: 8 20; -fx-font-weight: bold;" />
+        <Region HBox.hgrow="ALWAYS" />
+    </HBox>
+    
+    <!-- Patients Table -->
+    <TableView fx:id="patientsTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn text="Patient ID" fx:id="patientIdColumn" prefWidth="80" sortable="false" />
+            <TableColumn text="First Name" fx:id="firstNameColumn" prefWidth="120" sortable="false" />
+            <TableColumn text="Last Name" fx:id="lastNameColumn" prefWidth="120" sortable="false" />
+            <TableColumn text="Date of Birth" fx:id="dateOfBirthColumn" prefWidth="120" sortable="false" />
+            <TableColumn text="Gender" fx:id="genderColumn" prefWidth="100" sortable="false" />
+            <TableColumn text="Blood Group" fx:id="bloodGroupColumn" prefWidth="100" sortable="false" />
+            <TableColumn text="Phone" fx:id="phoneColumn" prefWidth="120" sortable="false" />
+            <TableColumn text="Email" fx:id="emailColumn" prefWidth="150" sortable="false" />
+            <TableColumn text="Address" fx:id="addressColumn" prefWidth="150" sortable="false" />
+            <TableColumn text="Actions" fx:id="actionsColumn" prefWidth="100" sortable="false" />
+        </columns>
+    </TableView>
+    
+    <!-- Status Bar -->
+    <HBox spacing="10" style="-fx-border-top: 1 solid #ccc; -fx-padding: 10 0 0 0;">
+        <Label fx:id="statusLabel" text="Total Patients: 0" style="-fx-font-weight: bold;" />
+        <Region HBox.hgrow="ALWAYS" />
+    </HBox>
+</VBox>

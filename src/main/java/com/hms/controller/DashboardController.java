@@ -47,8 +47,8 @@ public class DashboardController {
 
     @FXML
     private void showPatientRegistration() {
-        loadView("patient-registration.fxml");
-        statusLabel.setText("Patient Registration");
+        loadView("add-patient.fxml");
+        statusLabel.setText("Add New Patient");
     }
 
     @FXML
@@ -59,12 +59,44 @@ public class DashboardController {
 
     @FXML
     private void showDoctorRegistration() {
-        showInfo("Coming Soon", "Doctor registration feature will be available soon!");
+        loadView("add-doctor.fxml");
+        statusLabel.setText("Add New Doctor");
     }
 
     @FXML
     private void showDoctorList() {
-        showInfo("Coming Soon", "Doctor list feature will be available soon!");
+        loadView("doctors.fxml");
+        statusLabel.setText("Doctor Management");
+    }
+
+    @FXML
+    private void showNurseList() {
+        loadView("nurses.fxml");
+        statusLabel.setText("Nurse Management");
+    }
+
+    @FXML
+    private void showCleanerList() {
+        loadView("cleaners.fxml");
+        statusLabel.setText("Cleaner Management");
+    }
+
+    @FXML
+    private void showReception() {
+        loadView("reception.fxml");
+        statusLabel.setText("Reception Management");
+    }
+
+    @FXML
+    private void showAmbulances() {
+        loadView("ambulances.fxml");
+        statusLabel.setText("Ambulance Management");
+    }
+
+    @FXML
+    private void showFinance() {
+        loadView("finance.fxml");
+        statusLabel.setText("Profit Management");
     }
 
     @FXML

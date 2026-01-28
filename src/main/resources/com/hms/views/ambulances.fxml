@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600" prefWidth="900" spacing="10" style="-fx-padding: 15;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hms.controller.AmbulanceController">
+   <Label text="Ambulance Management System" style="-fx-font-size: 24; -fx-font-weight: bold;" />
+   
+   <HBox spacing="10">
+      <TextField fx:id="searchField" promptText="Search by vehicle number or driver" HBox.hgrow="ALWAYS" />
+      <Button text="Search" onAction="#handleSearch" />
+      <Button text="Add Ambulance" onAction="#handleAddAmbulance" style="-fx-font-size: 12;" />
+   </HBox>
+   
+   <TableView fx:id="ambulanceTable" prefHeight="400" VBox.vgrow="ALWAYS">
+      <columns>
+         <TableColumn prefWidth="50" text="ID" fx:id="idColumn" />
+         <TableColumn prefWidth="100" text="Vehicle #" fx:id="vehicleColumn" />
+         <TableColumn prefWidth="80" text="Type" fx:id="typeColumn" />
+         <TableColumn prefWidth="100" text="Driver" fx:id="driverColumn" />
+         <TableColumn prefWidth="100" text="Phone" fx:id="phoneColumn" />
+         <TableColumn prefWidth="100" text="Status" fx:id="statusColumn" />
+         <TableColumn prefWidth="120" text="Location" fx:id="locationColumn" />
+         <TableColumn prefWidth="80" text="Capacity" fx:id="capacityColumn" />
+         <TableColumn prefWidth="100" text="Actions" fx:id="actionsColumn" />
+      </columns>
+   </TableView>
+   
+   <HBox spacing="10">
+      <Button text="Edit" onAction="#handleEditAmbulance" />
+      <Button text="Update Status" onAction="#handleUpdateStatus" />
+      <Button text="Delete" onAction="#handleDeleteAmbulance" />
+      <Button text="Refresh" onAction="#loadAmbulances" />
+   </HBox>
+</VBox>

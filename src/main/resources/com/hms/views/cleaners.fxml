@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600" prefWidth="900" spacing="10" style="-fx-padding: 15;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hms.controller.CleanerController">
+   <Label text="Cleaner Management" style="-fx-font-size: 24; -fx-font-weight: bold;" />
+   
+   <HBox spacing="10">
+      <TextField fx:id="searchField" promptText="Search by name or floor" HBox.hgrow="ALWAYS" />
+      <Button text="Search" onAction="#handleSearch" />
+      <Button text="Add Cleaner" onAction="#handleAddCleaner" style="-fx-font-size: 12;" />
+   </HBox>
+   
+   <TableView fx:id="cleanerTable" prefHeight="400" VBox.vgrow="ALWAYS">
+      <columns>
+         <TableColumn prefWidth="50" text="ID" fx:id="idColumn" />
+         <TableColumn prefWidth="100" text="First Name" fx:id="firstNameColumn" />
+         <TableColumn prefWidth="100" text="Last Name" fx:id="lastNameColumn" />
+         <TableColumn prefWidth="100" text="Phone" fx:id="phoneColumn" />
+         <TableColumn prefWidth="80" text="Floor" fx:id="floorColumn" />
+         <TableColumn prefWidth="100" text="Area" fx:id="areaColumn" />
+         <TableColumn prefWidth="100" text="Shift" fx:id="shiftColumn" />
+         <TableColumn prefWidth="150" text="Description" fx:id="descriptionColumn" />
+         <TableColumn prefWidth="100" text="Actions" fx:id="actionsColumn" />
+      </columns>
+   </TableView>
+   
+   <HBox spacing="10">
+      <Button text="Edit" onAction="#handleEditCleaner" />
+      <Button text="Delete" onAction="#handleDeleteCleaner" />
+      <Button text="Refresh" onAction="#loadCleaners" />
+   </HBox>
+</VBox>

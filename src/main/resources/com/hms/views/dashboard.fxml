@@ -21,8 +21,20 @@
                     <MenuItem text="View All Patients" onAction="#showPatientList"/>
                 </Menu>
                 <Menu text="Doctors">
-                    <MenuItem text="Add Doctor" onAction="#showDoctorRegistration"/>
                     <MenuItem text="View All Doctors" onAction="#showDoctorList"/>
+                </Menu>
+                <Menu text="Staff">
+                    <MenuItem text="Nurses" onAction="#showNurseList"/>
+                    <MenuItem text="Cleaners" onAction="#showCleanerList"/>
+                </Menu>
+                <Menu text="Reception">
+                    <MenuItem text="Visitor Check-In/Out" onAction="#showReception"/>
+                </Menu>
+                <Menu text="Ambulance">
+                    <MenuItem text="Ambulance Management" onAction="#showAmbulances"/>
+                </Menu>
+                <Menu text="Finance">
+                    <MenuItem text="Profit Management" onAction="#showFinance"/>
                 </Menu>
                 <Menu text="Appointments">
                     <MenuItem text="New Appointment" onAction="#showAppointmentForm"/>
@@ -54,7 +66,17 @@
                     maxWidth="Infinity" styleClass="sidebar-button"/>
             <Button text="👥 View Patients" onAction="#showPatientList" 
                     maxWidth="Infinity" styleClass="sidebar-button"/>
-            <Button text="🩺 New Appointment" onAction="#showAppointmentForm" 
+            <Button text="👨‍⚕️ Doctors" onAction="#showDoctorList" 
+                    maxWidth="Infinity" styleClass="sidebar-button"/>
+            <Button text="👩‍⚕️ Nurses" onAction="#showNurseList" 
+                    maxWidth="Infinity" styleClass="sidebar-button"/>
+            <Button text="🧹 Cleaners" onAction="#showCleanerList" 
+                    maxWidth="Infinity" styleClass="sidebar-button"/>
+            <Button text="🏥 Reception" onAction="#showReception" 
+                    maxWidth="Infinity" styleClass="sidebar-button"/>
+            <Button text="🚑 Ambulances" onAction="#showAmbulances" 
+                    maxWidth="Infinity" styleClass="sidebar-button"/>
+            <Button text="💰 Finance" onAction="#showFinance" 
                     maxWidth="Infinity" styleClass="sidebar-button"/>
             <Button text="📊 Dashboard" onAction="#showDashboard" 
                     maxWidth="Infinity" styleClass="sidebar-button"/>

@@ -10,4 +10,6 @@ module com.hms {
     exports com.hms;
     exports com.hms.controller;
     exports com.hms.model;
+    exports com.hms.service;
+    exports com.hms.database;
 }

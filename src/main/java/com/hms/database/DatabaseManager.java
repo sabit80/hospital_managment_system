@@ -32,6 +32,11 @@ public class DatabaseManager {
         createPatientsTable();
         createDoctorsTable();
         createAppointmentsTable();
+        createNursesTable();
+        createCleanersTable();
+        createReceptionTable();
+        createAmbulancesTable();
+        createFinanceTable();
     }
 
     private void createPatientsTable() {
@@ -61,7 +66,11 @@ public class DatabaseManager {
                 specialization TEXT,
                 phone TEXT,
                 email TEXT,
-                license_number TEXT UNIQUE
+                license_number TEXT UNIQUE,
+                description TEXT,
+                hire_date DATE,
+                working_hours TEXT,
+                office_location TEXT
             )
         """;
         executeUpdate(sql);
@@ -79,6 +88,100 @@ public class DatabaseManager {
                 notes TEXT,
                 FOREIGN KEY (patient_id) REFERENCES patients(id),
                 FOREIGN KEY (doctor_id) REFERENCES doctors(id)
+            )
+        """;
+        executeUpdate(sql);
+    }
+
+    private void createNursesTable() {
+        String sql = """
+            CREATE TABLE IF NOT EXISTS nurses (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                first_name TEXT NOT NULL,
+                last_name TEXT NOT NULL,
+                phone TEXT,
+                email TEXT,
+                license_number INTEGER,
+                description TEXT,
+                hire_date DATE,
+                working_hours TEXT,
+                floor TEXT,
+                room_number TEXT,
+                department TEXT
+            )
+        """;
+        executeUpdate(sql);
+    }
+
+    private void createCleanersTable() {
+        String sql = """
+            CREATE TABLE IF NOT EXISTS cleaners (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                first_name TEXT NOT NULL,
+                last_name TEXT NOT NULL,
+                phone TEXT,
+                email TEXT,
+                description TEXT,
+                hire_date DATE,
+                working_hours TEXT,
+                assigned_floor TEXT,
+                assigned_area TEXT,
+                shift TEXT
+            )
+        """;
+        executeUpdate(sql);
+    }
+
+    private void createReceptionTable() {
+        String sql = """
+            CREATE TABLE IF NOT EXISTS reception (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                visitor_name TEXT NOT NULL,
+                visitor_phone TEXT,
+                patient_name TEXT,
+                patient_id INTEGER,
+                purpose_of_visit TEXT,
+                check_in_time TEXT,
+                check_out_time TEXT,
+                receptionist_name TEXT,
+                remarks TEXT,
+                status TEXT DEFAULT 'Checked In'
+            )
+        """;
+        executeUpdate(sql);
+    }
+
+    private void createAmbulancesTable() {
+        String sql = """
+            CREATE TABLE IF NOT EXISTS ambulances (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                vehicle_number TEXT UNIQUE NOT NULL,
+                type TEXT,
+                driver_name TEXT,
+                driver_phone TEXT,
+                status TEXT DEFAULT 'Available',
+                current_location TEXT,
+                last_service_date TEXT,
+                capacity INTEGER,
+                equipped BOOLEAN DEFAULT 0,
+                equipment_list TEXT,
+                fuel_status TEXT
+            )
+        """;
+        executeUpdate(sql);
+    }
+
+    private void createFinanceTable() {
+        String sql = """
+            CREATE TABLE IF NOT EXISTS finance (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                transaction_date DATE NOT NULL,
+                type TEXT NOT NULL,
+                category TEXT,
+                description TEXT,
+                amount REAL NOT NULL,
+                payment_method TEXT,
+                remarks TEXT
             )
         """;
         executeUpdate(sql);

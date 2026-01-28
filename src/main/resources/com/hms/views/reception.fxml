@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600" prefWidth="900" spacing="10" style="-fx-padding: 15;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hms.controller.ReceptionController">
+   <Label text="Reception Management" style="-fx-font-size: 24; -fx-font-weight: bold;" />
+   
+   <HBox spacing="10">
+      <TextField fx:id="searchField" promptText="Search by visitor or patient name" HBox.hgrow="ALWAYS" />
+      <Button text="Search" onAction="#handleSearch" />
+      <Button text="Check In" onAction="#handleCheckIn" style="-fx-font-size: 12;" />
+   </HBox>
+   
+   <TableView fx:id="receptionTable" prefHeight="400" VBox.vgrow="ALWAYS">
+      <columns>
+         <TableColumn prefWidth="50" text="ID" fx:id="idColumn" />
+         <TableColumn prefWidth="100" text="Visitor Name" fx:id="visitorNameColumn" />
+         <TableColumn prefWidth="100" text="Patient Name" fx:id="patientNameColumn" />
+         <TableColumn prefWidth="100" text="Phone" fx:id="phoneColumn" />
+         <TableColumn prefWidth="120" text="Purpose" fx:id="purposeColumn" />
+         <TableColumn prefWidth="150" text="Check In Time" fx:id="checkInColumn" />
+         <TableColumn prefWidth="150" text="Check Out Time" fx:id="checkOutColumn" />
+         <TableColumn prefWidth="80" text="Status" fx:id="statusColumn" />
+         <TableColumn prefWidth="100" text="Actions" fx:id="actionsColumn" />
+      </columns>
+   </TableView>
+   
+   <HBox spacing="10">
+      <Button text="Check Out" onAction="#handleCheckOut" />
+      <Button text="Delete" onAction="#handleDeleteReception" />
+      <Button text="Refresh" onAction="#loadReceptions" />
+   </HBox>
+</VBox>

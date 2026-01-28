@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="600" prefWidth="900" spacing="15" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hms.controller.AddPatientController">
+    <Label text="Add New Patient" style="-fx-font-size: 24; -fx-font-weight: bold;" />
+    
+    <ScrollPane fitToWidth="true" fitToHeight="false">
+        <VBox spacing="12" style="-fx-padding: 10;">
+            <HBox spacing="20">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="First Name:" style="-fx-font-weight: bold;" />
+                    <TextField fx:id="firstNameField" promptText="Enter first name"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Last Name:" style="-fx-font-weight: bold;" />
+                    <TextField fx:id="lastNameField" promptText="Enter last name"/>
+                </VBox>
+            </HBox>
+            
+            <HBox spacing="20">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Date of Birth:" style="-fx-font-weight: bold;" />
+                    <DatePicker fx:id="dateOfBirthPicker"/>
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Gender:" style="-fx-font-weight: bold;" />
+                    <ComboBox fx:id="genderCombo" prefWidth="150" />
+                </VBox>
+            </HBox>
+            
+            <HBox spacing="20">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Blood Group:" style="-fx-font-weight: bold;" />
+                    <ComboBox fx:id="bloodGroupCombo" prefWidth="150" />
+                </VBox>
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Phone:" style="-fx-font-weight: bold;" />
+                    <TextField fx:id="phoneField" promptText="Enter phone number"/>
+                </VBox>
+            </HBox>
+            
+            <HBox spacing="20">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Email:" style="-fx-font-weight: bold;" />
+                    <TextField fx:id="emailField" promptText="Enter email"/>
+                </VBox>
+            </HBox>
+            
+            <VBox spacing="5">
+                <Label text="Address:" style="-fx-font-weight: bold;" />
+                <TextArea fx:id="addressArea" prefRowCount="3" wrapText="true" promptText="Enter address..."/>
+            </VBox>
+        </VBox>
+    </ScrollPane>
+    
+    <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+        <Button text="Register Patient" onAction="#handleSavePatient" style="-fx-padding: 10; -fx-font-size: 12; -fx-min-width: 120;" />
+        <Button text="Cancel" onAction="#handleCancel" style="-fx-padding: 10; -fx-font-size: 12; -fx-min-width: 120;" />
+    </HBox>
+    
+    <Label fx:id="statusLabel" text="" style="-fx-text-fill: #4CAF50;" />
+</VBox>
