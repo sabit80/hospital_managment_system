@@ -58,7 +58,7 @@ public class PatientController {
     }
     
     private void setupTableColumns() {
-        patientIdColumn.setCellValueFactory(new PropertyValueFactory<>("patientId"));
+        patientIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         dateOfBirthColumn.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
@@ -69,6 +69,7 @@ public class PatientController {
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
     }
     
+    @FXML
     private void loadPatients() {
         List<Patient> patients = patientService.getAllPatients();
         patientsTable.setItems(FXCollections.observableArrayList(patients));
@@ -103,7 +104,9 @@ public class PatientController {
             
             Stage stage = new Stage();
             stage.setTitle("Add New Patient");
-            stage.setScene(new Scene(addPatientView));
+            Scene scene = new Scene(addPatientView);
+            scene.getStylesheets().add(getClass().getResource("/com/hms/styles.css").toExternalForm());
+            stage.setScene(scene);
             stage.setWidth(500);
             stage.setHeight(600);
             stage.showAndWait();

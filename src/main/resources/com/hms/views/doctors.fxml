@@ -8,34 +8,37 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.Region?>
 
-<VBox prefHeight="600" prefWidth="900" spacing="10" style="-fx-padding: 15;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hms.controller.DoctorController">
-   <Label text="Doctor Management" style="-fx-font-size: 24; -fx-font-weight: bold;" />
+<VBox prefHeight="600" prefWidth="900" spacing="12" styleClass="page" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hms.controller.DoctorController">
+   <VBox spacing="4">
+      <Label text="Doctor Management" styleClass="page-title" />
+      <Label text="Search, manage, and update doctors" styleClass="page-subtitle" />
+   </VBox>
    
-   <HBox spacing="10">
-      <TextField fx:id="searchField" promptText="Search by name or specialization" HBox.hgrow="ALWAYS" />
-      <Button text="Search" onAction="#handleSearch" />
-      <Button text="Add Doctor" onAction="#handleAddDoctor" style="-fx-font-size: 12;" />
+   <HBox spacing="10" styleClass="toolbar">
+      <TextField fx:id="searchField" promptText="Search by name or specialization" HBox.hgrow="ALWAYS" styleClass="input" />
+      <Button text="Search" onAction="#handleSearch" styleClass="ghost-button" />
+      <Button text="Add Doctor" onAction="#handleAddDoctor" styleClass="primary-button" />
    </HBox>
    
-   <TableView fx:id="doctorTable" prefHeight="400" VBox.vgrow="ALWAYS">
+   <TableView fx:id="doctorTable" prefHeight="400" VBox.vgrow="ALWAYS" styleClass="table-view-modern">
       <columns>
-         <TableColumn prefWidth="50" text="ID" fx:id="idColumn" />
-         <TableColumn prefWidth="100" text="First Name" fx:id="firstNameColumn" />
-         <TableColumn prefWidth="100" text="Last Name" fx:id="lastNameColumn" />
-         <TableColumn prefWidth="120" text="Specialization" fx:id="specializationColumn" />
-         <TableColumn prefWidth="100" text="Phone" fx:id="phoneColumn" />
-         <TableColumn prefWidth="120" text="Email" fx:id="emailColumn" />
-         <TableColumn prefWidth="100" text="License #" fx:id="licenseColumn" />
-         <TableColumn prefWidth="150" text="Description" fx:id="descriptionColumn" />
-         <TableColumn prefWidth="100" text="Actions" fx:id="actionsColumn" />
+         <TableColumn prefWidth="60" text="ID" fx:id="idColumn" />
+         <TableColumn prefWidth="120" text="First Name" fx:id="firstNameColumn" />
+         <TableColumn prefWidth="120" text="Last Name" fx:id="lastNameColumn" />
+         <TableColumn prefWidth="150" text="Specialization" fx:id="specializationColumn" />
+         <TableColumn prefWidth="120" text="Phone" fx:id="phoneColumn" />
+         <TableColumn prefWidth="180" text="Email" fx:id="emailColumn" />
+         <TableColumn prefWidth="120" text="License #" fx:id="licenseColumn" />
+         <TableColumn prefWidth="220" text="Description" fx:id="descriptionColumn" />
       </columns>
    </TableView>
    
-   <HBox spacing="10">
-      <Button text="Edit" onAction="#handleEditDoctor" />
-      <Button text="Delete" onAction="#handleDeleteDoctor" />
-      <Button text="Refresh" onAction="#loadDoctors" />
+   <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="form-actions">
+      <Button text="Edit" onAction="#handleEditDoctor" styleClass="ghost-button" />
+      <Button text="Delete" onAction="#handleDeleteDoctor" styleClass="danger-button" />
+      <Region HBox.hgrow="ALWAYS" />
+      <Button text="Refresh" onAction="#loadDoctors" styleClass="ghost-button" />
    </HBox>
 </VBox>

@@ -37,6 +37,7 @@ public class DatabaseManager {
         createReceptionTable();
         createAmbulancesTable();
         createFinanceTable();
+        runMigrations();
     }
 
     private void createPatientsTable() {
@@ -192,6 +193,32 @@ public class DatabaseManager {
             stmt.execute(sql);
         } catch (SQLException e) {
             System.err.println("Error executing SQL: " + e.getMessage());
+        }
+    }
+
+    private void runMigrations() {
+        // Add missing columns if they don't exist
+        addColumnIfNotExists("doctors", "description", "TEXT");
+        addColumnIfNotExists("doctors", "working_hours", "TEXT");
+        addColumnIfNotExists("doctors", "office_location", "TEXT");
+        addColumnIfNotExists("doctors", "hire_date", "DATE");
+    }
+
+    private void addColumnIfNotExists(String tableName, String columnName, String columnType) {
+        try {
+            // Check if column exists
+            DatabaseMetaData metaData = connection.getMetaData();
+            ResultSet columns = metaData.getColumns(null, null, tableName, columnName);
+            
+            if (!columns.next()) {
+                // Column doesn't exist, add it
+                String sql = "ALTER TABLE " + tableName + " ADD COLUMN " + columnName + " " + columnType;
+                executeUpdate(sql);
+                System.out.println("Added column " + columnName + " to table " + tableName);
+            }
+            columns.close();
+        } catch (SQLException e) {
+            System.err.println("Error checking/adding column: " + e.getMessage());
         }
     }
 

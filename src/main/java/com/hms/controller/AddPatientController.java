@@ -2,9 +2,12 @@ package com.hms.controller;
 
 import com.hms.model.Patient;
 import com.hms.service.PatientService;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.util.Duration;
 import java.time.LocalDate;
+import java.util.regex.Pattern;
 
 public class AddPatientController {
     @FXML private TextField firstNameField;
@@ -18,6 +21,7 @@ public class AddPatientController {
     @FXML private Label statusLabel;
     
     private PatientService patientService;
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$");
 
     @FXML
     public void initialize() {
@@ -33,7 +37,7 @@ public class AddPatientController {
     @FXML
     public void handleSavePatient() {
         // Validate input
-        if (firstNameField.getText().isEmpty() || lastNameField.getText().isEmpty()) {
+        if (isBlank(firstNameField.getText()) || isBlank(lastNameField.getText())) {
             showError("Validation Error", "First name and last name are required!");
             return;
         }
@@ -42,34 +46,44 @@ public class AddPatientController {
             showError("Validation Error", "Date of birth is required!");
             return;
         }
+        
+        if (dateOfBirthPicker.getValue().isAfter(LocalDate.now())) {
+            showError("Validation Error", "Date of birth cannot be in the future!");
+            return;
+        }
+
+        if (!isBlank(emailField.getText()) && !EMAIL_PATTERN.matcher(emailField.getText().trim()).matches()) {
+            showError("Validation Error", "Please enter a valid email address!");
+            return;
+        }
+
+        if (!isBlank(phoneField.getText()) && phoneField.getText().trim().length() < 6) {
+            showError("Validation Error", "Please enter a valid phone number!");
+            return;
+        }
 
         // Create patient object
         Patient patient = new Patient();
-        patient.setFirstName(firstNameField.getText());
-        patient.setLastName(lastNameField.getText());
+        patient.setFirstName(firstNameField.getText().trim());
+        patient.setLastName(lastNameField.getText().trim());
         patient.setDateOfBirth(dateOfBirthPicker.getValue());
         patient.setGender(genderCombo.getValue());
         patient.setBloodGroup(bloodGroupCombo.getValue());
-        patient.setPhone(phoneField.getText());
-        patient.setEmail(emailField.getText());
-        patient.setAddress(addressArea.getText());
+        patient.setPhone(phoneField.getText() == null ? "" : phoneField.getText().trim());
+        patient.setEmail(emailField.getText() == null ? "" : emailField.getText().trim());
+        patient.setAddress(addressArea.getText() == null ? "" : addressArea.getText().trim());
         patient.setRegistrationDate(LocalDate.now());
 
         // Save to database
         if (patientService.addPatient(patient)) {
             statusLabel.setText("✓ Patient registered successfully!");
-            statusLabel.setStyle("-fx-text-fill: #4CAF50;");
+            statusLabel.setStyle("-fx-text-fill: #10B981; -fx-font-weight: 600;");
             clearFields();
             
             // Auto-hide status after 3 seconds
-            new Thread(() -> {
-                try {
-                    Thread.sleep(3000);
-                    statusLabel.setText("");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }).start();
+            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(e -> statusLabel.setText(""));
+            pause.play();
         } else {
             showError("Error", "Failed to register patient!");
         }
@@ -90,6 +104,10 @@ public class AddPatientController {
         phoneField.clear();
         emailField.clear();
         addressArea.clear();
+    }
+    
+    private boolean isBlank(String value) {
+        return value == null || value.trim().isEmpty();
     }
 
     private void showError(String title, String message) {

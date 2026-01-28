@@ -4,10 +4,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="600" prefWidth="900" spacing="12" styleClass="page" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hms.controller.AddDoctorController">
+<VBox prefHeight="600" prefWidth="900" spacing="12" styleClass="page" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hms.controller.AddNurseController">
     <VBox spacing="4">
-        <Label text="Add New Doctor" styleClass="page-title" />
-        <Label text="Create a complete doctor profile" styleClass="page-subtitle" />
+        <Label text="Add New Nurse" styleClass="page-title" />
+        <Label text="Register a new nurse in the system" styleClass="page-subtitle" />
     </VBox>
     
     <ScrollPane fitToWidth="true" fitToHeight="false" styleClass="form-scroll">
@@ -28,42 +28,47 @@
                 </VBox>
 
                 <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                    <Label text="Specialization" styleClass="form-label" />
-                    <ComboBox fx:id="specializationCombo" prefWidth="150" styleClass="input" />
-                </VBox>
-                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <Label text="License Number" styleClass="form-label" />
-                    <TextField fx:id="licenseNumberField" promptText="Enter license number" styleClass="input" />
-                </VBox>
-
-                <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="2">
                     <Label text="Phone" styleClass="form-label" />
                     <TextField fx:id="phoneField" promptText="Enter phone number" styleClass="input" />
                 </VBox>
-                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <Label text="Email" styleClass="form-label" />
                     <TextField fx:id="emailField" promptText="Enter email" styleClass="input" />
                 </VBox>
 
+                <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <Label text="License Number" styleClass="form-label" />
+                    <TextField fx:id="licenseNumberField" promptText="Enter license number" styleClass="input" />
+                </VBox>
+                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <Label text="Department" styleClass="form-label" />
+                    <ComboBox fx:id="departmentCombo" prefWidth="150" styleClass="input" />
+                </VBox>
+
                 <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="3">
-                    <Label text="Working Hours" styleClass="form-label" />
-                    <TextField fx:id="workingHoursField" promptText="e.g., 9:00 AM - 5:00 PM" styleClass="input" />
+                    <Label text="Floor" styleClass="form-label" />
+                    <TextField fx:id="floorField" promptText="Enter floor" styleClass="input" />
                 </VBox>
                 <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                    <Label text="Office Location" styleClass="form-label" />
-                    <TextField fx:id="officeLocationField" promptText="Enter office location" styleClass="input" />
+                    <Label text="Room Number" styleClass="form-label" />
+                    <TextField fx:id="roomNumberField" promptText="Enter room number" styleClass="input" />
+                </VBox>
+
+                <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2">
+                    <Label text="Working Hours" styleClass="form-label" />
+                    <TextField fx:id="workingHoursField" promptText="e.g., 8:00 AM - 4:00 PM" styleClass="input" />
                 </VBox>
             </GridPane>
             
             <VBox spacing="6">
-                <Label text="Description / Bio" styleClass="form-label" />
-                <TextArea fx:id="descriptionArea" prefRowCount="4" wrapText="true" promptText="Enter doctor description..." styleClass="input text-area" />
+                <Label text="Description / Notes" styleClass="form-label" />
+                <TextArea fx:id="descriptionArea" prefRowCount="3" wrapText="true" promptText="Enter additional notes..." styleClass="input text-area" />
             </VBox>
         </VBox>
     </ScrollPane>
     
     <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="form-actions">
-        <Button text="Save Doctor" onAction="#handleSaveDoctor" styleClass="primary-button" />
+        <Button text="Save Nurse" onAction="#handleSaveNurse" styleClass="primary-button" />
         <Button text="Clear" onAction="#handleCancel" styleClass="ghost-button" />
     </HBox>
     

@@ -46,21 +46,21 @@
             </MenuBar>
             
             <!-- Header -->
-            <HBox style="-fx-background-color: #2196F3; -fx-padding: 15;">
-                <Label text="Hospital Management System" textFill="white">
-                    <font>
-                        <Font name="System Bold" size="24.0"/>
-                    </font>
-                </Label>
+            <HBox alignment="CENTER_LEFT" style="-fx-background-color: linear-gradient(to right, #0EA5E9, #0284C7); -fx-padding: 24 32;">
+                <Label text="🏥 Hospital Management System" textFill="white" style="-fx-font-size: 28px; -fx-font-weight: 700;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <VBox alignment="CENTER_RIGHT">
+                    <Label fx:id="currentDateLabel" text="" textFill="white" style="-fx-font-size: 15px; -fx-font-weight: 500;"/>
+                    <Label text="Admin Dashboard" textFill="white" style="-fx-font-size: 13px; -fx-opacity: 0.85;"/>
+                </VBox>
             </HBox>
         </VBox>
     </top>
     
     <!-- Left Sidebar -->
     <left>
-        <VBox spacing="10" style="-fx-background-color: #f5f5f5; -fx-padding: 15;">
-            <Label text="Quick Actions" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
-            <Separator/>
+        <VBox spacing="6" style="-fx-background-color: #FFFFFF; -fx-padding: 24; -fx-border-color: #E5E7EB; -fx-border-width: 0 1 0 0; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.03), 8, 0, 2, 0);">
+            <Label text="QUICK ACTIONS" style="-fx-font-weight: 700; -fx-font-size: 12px; -fx-text-fill: #9CA3AF; -fx-padding: 0 0 12 0;"/>
             
             <Button text="➕ Register Patient" onAction="#showPatientRegistration" 
                     maxWidth="Infinity" styleClass="sidebar-button"/>
@@ -78,42 +78,75 @@
                     maxWidth="Infinity" styleClass="sidebar-button"/>
             <Button text="💰 Finance" onAction="#showFinance" 
                     maxWidth="Infinity" styleClass="sidebar-button"/>
+            
+            <Separator style="-fx-background-color: #E5E7EB; -fx-padding: 8 0;"/>
+            
             <Button text="📊 Dashboard" onAction="#showDashboard" 
-                    maxWidth="Infinity" styleClass="sidebar-button"/>
+                    maxWidth="Infinity" styleClass="sidebar-button" style="-fx-background-color: #EFF6FF; -fx-text-fill: #0EA5E9;"/>
         </VBox>
     </left>
     
     <!-- Center Content Area -->
     <center>
-        <StackPane fx:id="contentArea" style="-fx-padding: 20;">
-            <VBox spacing="20" alignment="CENTER">
-                <Label text="Welcome to Hospital Management System" style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
-                <Label text="Select an option from the menu to get started" style="-fx-font-size: 16px; -fx-text-fill: #666;"/>
+        <StackPane fx:id="contentArea" style="-fx-padding: 32; -fx-background-color: #F8F9FC;">
+            <VBox spacing="32" alignment="CENTER">
+                <VBox spacing="6" alignment="CENTER">
+                    <Label text="Welcome to Hospital Management System" style="-fx-font-size: 34px; -fx-font-weight: 700; -fx-text-fill: #0F172A;"/>
+                    <Label text="Monitor and manage all hospital operations from one place" style="-fx-font-size: 15px; -fx-text-fill: #64748B;"/>
+                </VBox>
                 
-                <GridPane hgap="20" vgap="20" alignment="CENTER">
+                <GridPane hgap="24" vgap="24" alignment="CENTER">
                     <padding>
-                        <Insets top="30"/>
+                        <Insets top="20"/>
                     </padding>
                     
-                    <!-- Dashboard Cards -->
-                    <VBox spacing="10" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 30; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-background-radius: 5;" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                        <Label text="Total Patients" style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
-                        <Label fx:id="totalPatientsLabel" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #2196F3;"/>
+                    <!-- Dashboard Cards with Modern Design -->
+                    <VBox spacing="16" alignment="TOP_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                          style="-fx-background-color: white; -fx-padding: 28; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(14,165,233,0.15), 20, 0, 0, 8); -fx-pref-width: 280; -fx-pref-height: 160;">
+                        <HBox spacing="12" alignment="CENTER_LEFT">
+                            <Label text="👥" style="-fx-font-size: 32px;"/>
+                            <VBox spacing="2">
+                                <Label text="Total Patients" style="-fx-font-size: 13px; -fx-text-fill: #64748B; -fx-font-weight: 600;"/>
+                                <Label fx:id="totalPatientsLabel" text="0" style="-fx-font-size: 38px; -fx-font-weight: 700; -fx-text-fill: #0EA5E9;"/>
+                            </VBox>
+                        </HBox>
+                        <Label text="Registered in system" style="-fx-font-size: 13px; -fx-text-fill: #94A3B8;"/>
                     </VBox>
                     
-                    <VBox spacing="10" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 30; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-background-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                        <Label text="Total Doctors" style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
-                        <Label fx:id="totalDoctorsLabel" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;"/>
+                    <VBox spacing="16" alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                          style="-fx-background-color: white; -fx-padding: 28; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(16,185,129,0.15), 20, 0, 0, 8); -fx-pref-width: 280; -fx-pref-height: 160;">
+                        <HBox spacing="12" alignment="CENTER_LEFT">
+                            <Label text="👨‍⚕️" style="-fx-font-size: 32px;"/>
+                            <VBox spacing="2">
+                                <Label text="Total Doctors" style="-fx-font-size: 13px; -fx-text-fill: #64748B; -fx-font-weight: 600;"/>
+                                <Label fx:id="totalDoctorsLabel" text="0" style="-fx-font-size: 38px; -fx-font-weight: 700; -fx-text-fill: #10B981;"/>
+                            </VBox>
+                        </HBox>
+                        <Label text="Active medical staff" style="-fx-font-size: 13px; -fx-text-fill: #94A3B8;"/>
                     </VBox>
                     
-                    <VBox spacing="10" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 30; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-background-radius: 5;" GridPane.columnIndex="0" GridPane.rowIndex="1">
-                        <Label text="Today's Appointments" style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
-                        <Label fx:id="todayAppointmentsLabel" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #FF9800;"/>
+                    <VBox spacing="16" alignment="TOP_LEFT" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                          style="-fx-background-color: white; -fx-padding: 28; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(245,158,11,0.15), 20, 0, 0, 8); -fx-pref-width: 280; -fx-pref-height: 160;">
+                        <HBox spacing="12" alignment="CENTER_LEFT">
+                            <Label text="🚑" style="-fx-font-size: 32px;"/>
+                            <VBox spacing="2">
+                                <Label text="Ambulances" style="-fx-font-size: 13px; -fx-text-fill: #64748B; -fx-font-weight: 600;"/>
+                                <Label fx:id="totalAmbulancesLabel" text="0" style="-fx-font-size: 38px; -fx-font-weight: 700; -fx-text-fill: #F59E0B;"/>
+                            </VBox>
+                        </HBox>
+                        <Label text="Available in fleet" style="-fx-font-size: 13px; -fx-text-fill: #94A3B8;"/>
                     </VBox>
                     
-                    <VBox spacing="10" alignment="CENTER" style="-fx-background-color: white; -fx-padding: 30; -fx-border-color: #ddd; -fx-border-radius: 5; -fx-background-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                        <Label text="Pending Appointments" style="-fx-font-size: 14px; -fx-text-fill: #666;"/>
-                        <Label fx:id="pendingAppointmentsLabel" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #f44336;"/>
+                    <VBox spacing="16" alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                          style="-fx-background-color: white; -fx-padding: 28; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(139,92,246,0.15), 20, 0, 0, 8); -fx-pref-width: 280; -fx-pref-height: 160;">
+                        <HBox spacing="12" alignment="CENTER_LEFT">
+                            <Label text="👥" style="-fx-font-size: 32px;"/>
+                            <VBox spacing="2">
+                                <Label text="Total Staff" style="-fx-font-size: 13px; -fx-text-fill: #64748B; -fx-font-weight: 600;"/>
+                                <Label fx:id="totalEmployeesLabel" text="0" style="-fx-font-size: 38px; -fx-font-weight: 700; -fx-text-fill: #8B5CF6;"/>
+                            </VBox>
+                        </HBox>
+                        <Label text="All employees" style="-fx-font-size: 13px; -fx-text-fill: #94A3B8;"/>
                     </VBox>
                 </GridPane>
             </VBox>
@@ -122,10 +155,10 @@
     
     <!-- Bottom Status Bar -->
     <bottom>
-        <HBox style="-fx-background-color: #f5f5f5; -fx-padding: 10;">
-            <Label fx:id="statusLabel" text="Ready"/>
+        <HBox style="-fx-background-color: #F9FAFB; -fx-padding: 12 20; -fx-border-color: #E5E7EB; -fx-border-width: 1 0 0 0;">
+            <Label fx:id="statusLabel" text="● Ready" style="-fx-text-fill: #10B981; -fx-font-size: 13px;"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Label text="Hospital Management System v1.0"/>
+            <Label text="Hospital Management System v1.0" style="-fx-text-fill: #6B7280; -fx-font-size: 12px;"/>
         </HBox>
     </bottom>
     

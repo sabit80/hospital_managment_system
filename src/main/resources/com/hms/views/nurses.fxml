@@ -8,34 +8,38 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600" prefWidth="900" spacing="10" style="-fx-padding: 15;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hms.controller.NurseController">
-   <Label text="Nurse Management" style="-fx-font-size: 24; -fx-font-weight: bold;" />
+<VBox prefHeight="600" prefWidth="900" spacing="12" styleClass="page" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hms.controller.NurseController">
+   <VBox spacing="4">
+      <Label text="Nurse Management" styleClass="page-title" />
+      <Label text="Manage nursing staff and assignments" styleClass="page-subtitle" />
+   </VBox>
    
-   <HBox spacing="10">
-      <TextField fx:id="searchField" promptText="Search by name or department" HBox.hgrow="ALWAYS" />
-      <Button text="Search" onAction="#handleSearch" />
-      <Button text="Add Nurse" onAction="#handleAddNurse" style="-fx-font-size: 12;" />
+   <HBox spacing="10" styleClass="toolbar">
+      <TextField fx:id="searchField" promptText="Search by name or department" HBox.hgrow="ALWAYS" styleClass="input" />
+      <Button text="Search" onAction="#handleSearch" styleClass="ghost-button" />
+      <Button text="Add Nurse" onAction="#handleAddNurse" styleClass="primary-button" />
    </HBox>
    
-   <TableView fx:id="nurseTable" prefHeight="400" VBox.vgrow="ALWAYS">
+   <TableView fx:id="nurseTable" prefHeight="400" VBox.vgrow="ALWAYS" styleClass="table-view-modern">
       <columns>
-         <TableColumn prefWidth="50" text="ID" fx:id="idColumn" />
-         <TableColumn prefWidth="100" text="First Name" fx:id="firstNameColumn" />
-         <TableColumn prefWidth="100" text="Last Name" fx:id="lastNameColumn" />
-         <TableColumn prefWidth="100" text="Phone" fx:id="phoneColumn" />
+         <TableColumn prefWidth="60" text="ID" fx:id="idColumn" />
+         <TableColumn prefWidth="120" text="First Name" fx:id="firstNameColumn" />
+         <TableColumn prefWidth="120" text="Last Name" fx:id="lastNameColumn" />
+         <TableColumn prefWidth="120" text="Phone" fx:id="phoneColumn" />
          <TableColumn prefWidth="80" text="Floor" fx:id="floorColumn" />
          <TableColumn prefWidth="80" text="Room" fx:id="roomColumn" />
-         <TableColumn prefWidth="100" text="Department" fx:id="departmentColumn" />
-         <TableColumn prefWidth="150" text="Description" fx:id="descriptionColumn" />
-         <TableColumn prefWidth="100" text="Actions" fx:id="actionsColumn" />
+         <TableColumn prefWidth="130" text="Department" fx:id="departmentColumn" />
+         <TableColumn prefWidth="200" text="Description" fx:id="descriptionColumn" />
       </columns>
    </TableView>
    
-   <HBox spacing="10">
-      <Button text="Edit" onAction="#handleEditNurse" />
-      <Button text="Delete" onAction="#handleDeleteNurse" />
-      <Button text="Refresh" onAction="#loadNurses" />
+   <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="form-actions">
+      <Button text="Edit" onAction="#handleEditNurse" styleClass="ghost-button" />
+      <Button text="Delete" onAction="#handleDeleteNurse" styleClass="danger-button" />
+      <Region HBox.hgrow="ALWAYS" />
+      <Button text="Refresh" onAction="#loadNurses" styleClass="ghost-button" />
    </HBox>
 </VBox>

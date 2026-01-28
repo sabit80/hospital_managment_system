@@ -1,6 +1,11 @@
 package com.hms.controller;
 
 import com.hms.database.DatabaseManager;
+import com.hms.service.DoctorService;
+import com.hms.service.PatientService;
+import com.hms.service.AmbulanceService;
+import com.hms.service.NurseService;
+import com.hms.service.CleanerService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +13,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class DashboardController {
 
@@ -24,25 +31,52 @@ public class DashboardController {
     private Label totalDoctorsLabel;
     
     @FXML
-    private Label todayAppointmentsLabel;
+    private Label totalAmbulancesLabel;
     
     @FXML
-    private Label pendingAppointmentsLabel;
+    private Label totalEmployeesLabel;
+    
+    @FXML
+    private Label currentDateLabel;
+    
+    private PatientService patientService;
+    private DoctorService doctorService;
+    private AmbulanceService ambulanceService;
+    private NurseService nurseService;
+    private CleanerService cleanerService;
 
     @FXML
     public void initialize() {
         // Initialize database
         DatabaseManager.getInstance();
+        patientService = new PatientService();
+        doctorService = new DoctorService();
+        ambulanceService = new AmbulanceService();
+        nurseService = new NurseService();
+        cleanerService = new CleanerService();
         updateDashboardStats();
-        statusLabel.setText("System ready");
+        updateCurrentDate();
+        statusLabel.setText("● Ready");
     }
 
     private void updateDashboardStats() {
-        // TODO: Fetch real data from database
-        totalPatientsLabel.setText("0");
-        totalDoctorsLabel.setText("0");
-        todayAppointmentsLabel.setText("0");
-        pendingAppointmentsLabel.setText("0");
+        // Fetch real data from database
+        int totalPatients = patientService.getAllPatients().size();
+        int totalDoctors = doctorService.getAllDoctors().size();
+        int totalAmbulances = ambulanceService.getAllAmbulances().size();
+        int totalNurses = nurseService.getAllNurses().size();
+        int totalCleaners = cleanerService.getAllCleaners().size();
+        int totalEmployees = totalDoctors + totalNurses + totalCleaners;
+        
+        totalPatientsLabel.setText(String.valueOf(totalPatients));
+        totalDoctorsLabel.setText(String.valueOf(totalDoctors));
+        totalAmbulancesLabel.setText(String.valueOf(totalAmbulances));
+        totalEmployeesLabel.setText(String.valueOf(totalEmployees));
+    }
+    
+    private void updateCurrentDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy");
+        currentDateLabel.setText(LocalDate.now().format(formatter));
     }
 
     @FXML
@@ -111,9 +145,18 @@ public class DashboardController {
 
     @FXML
     private void showDashboard() {
-        contentArea.getChildren().clear();
-        updateDashboardStats();
-        statusLabel.setText("Dashboard");
+        try {
+            // Reload the entire dashboard to show the welcome screen with stat cards
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hms/views/dashboard.fxml"));
+            Parent dashboardView = loader.load();
+            contentArea.getScene().setRoot(dashboardView);
+        } catch (IOException e) {
+            // If reloading fails, just clear the content area and update stats
+            contentArea.getChildren().clear();
+            updateDashboardStats();
+            statusLabel.setText("Dashboard");
+            e.printStackTrace();
+        }
     }
 
     @FXML

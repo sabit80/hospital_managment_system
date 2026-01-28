@@ -9,6 +9,7 @@ import java.util.List;
 
 public class DoctorService {
     private Connection connection;
+    private String lastError;
 
     public DoctorService() {
         this.connection = DatabaseManager.getInstance().getConnection();
@@ -22,6 +23,7 @@ public class DoctorService {
         """;
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            lastError = null;
             pstmt.setString(1, doctor.getFirstName());
             pstmt.setString(2, doctor.getLastName());
             pstmt.setString(3, doctor.getSpecialization());
@@ -36,9 +38,14 @@ public class DoctorService {
             pstmt.executeUpdate();
             return true;
         } catch (SQLException e) {
-            System.err.println("Error adding doctor: " + e.getMessage());
+            lastError = e.getMessage();
+            System.err.println("Error adding doctor: " + lastError);
             return false;
         }
+    }
+
+    public String getLastError() {
+        return lastError;
     }
 
     public List<Doctor> getAllDoctors() {

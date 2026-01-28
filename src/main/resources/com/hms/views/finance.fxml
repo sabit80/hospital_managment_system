@@ -7,45 +7,49 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600" prefWidth="900" spacing="10" style="-fx-padding: 15;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hms.controller.FinanceController">
-   <Label text="Hospital Profit Management" style="-fx-font-size: 24; -fx-font-weight: bold;" />
+<VBox prefHeight="600" prefWidth="900" spacing="12" styleClass="page" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hms.controller.FinanceController">
+   <VBox spacing="4">
+      <Label text="Finance Management" styleClass="page-title" />
+      <Label text="Track income, expenses, and financial health" styleClass="page-subtitle" />
+   </VBox>
    
-   <HBox spacing="20" style="-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 5;">
-      <VBox spacing="5">
-         <Label text="Total Income:" style="-fx-font-weight: bold;" />
-         <Label fx:id="totalIncomeLabel" text="0.00" style="-fx-font-size: 18; -fx-text-fill: green;" />
+   <HBox spacing="16" style="-fx-padding: 12;">
+      <VBox spacing="8" alignment="CENTER" styleClass="stat-card" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+         <Label text="💰 Total Income" style="-fx-font-size: 12px; -fx-text-fill: #6B7280; -fx-font-weight: 600;" />
+         <Label fx:id="totalIncomeLabel" text="0.00" style="-fx-font-size: 24px; -fx-text-fill: #10B981; -fx-font-weight: 700;" />
       </VBox>
-      <VBox spacing="5">
-         <Label text="Total Expense:" style="-fx-font-weight: bold;" />
-         <Label fx:id="totalExpenseLabel" text="0.00" style="-fx-font-size: 18; -fx-text-fill: red;" />
+      <VBox spacing="8" alignment="CENTER" styleClass="stat-card" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+         <Label text="💸 Total Expense" style="-fx-font-size: 12px; -fx-text-fill: #6B7280; -fx-font-weight: 600;" />
+         <Label fx:id="totalExpenseLabel" text="0.00" style="-fx-font-size: 24px; -fx-text-fill: #EF4444; -fx-font-weight: 700;" />
       </VBox>
-      <VBox spacing="5">
-         <Label text="Net Profit:" style="-fx-font-weight: bold;" />
-         <Label fx:id="netProfitLabel" text="0.00" style="-fx-font-size: 18; -fx-text-fill: blue;" />
+      <VBox spacing="8" alignment="CENTER" styleClass="stat-card" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);">
+         <Label text="📊 Net Profit" style="-fx-font-size: 12px; -fx-text-fill: #6B7280; -fx-font-weight: 600;" />
+         <Label fx:id="netProfitLabel" text="0.00" style="-fx-font-size: 24px; -fx-text-fill: #3B82F6; -fx-font-weight: 700;" />
       </VBox>
-      <Button text="Refresh" onAction="#loadFinanceData" />
    </HBox>
    
-   <HBox spacing="10">
-      <Button text="Add Income" onAction="#handleAddIncome" />
-      <Button text="Add Expense" onAction="#handleAddExpense" />
-      <Button text="Export Report" onAction="#handleExportReport" />
+   <HBox spacing="10" styleClass="toolbar">
+      <Button text="Add Income" onAction="#handleAddIncome" styleClass="primary-button" />
+      <Button text="Add Expense" onAction="#handleAddExpense" styleClass="ghost-button" />
+      <Button text="Export Report" onAction="#handleExportReport" styleClass="ghost-button" />
+      <Region HBox.hgrow="ALWAYS" />
+      <Button text="Refresh" onAction="#loadFinanceData" styleClass="ghost-button" />
    </HBox>
    
-   <Label text="Transaction History" style="-fx-font-weight: bold;" />
-   <TableView fx:id="financeTable" prefHeight="350" VBox.vgrow="ALWAYS">
+   <Label text="Transaction History" style="-fx-font-weight: 600; -fx-text-fill: #374151; -fx-font-size: 14px;" />
+   <TableView fx:id="financeTable" prefHeight="350" VBox.vgrow="ALWAYS" styleClass="table-view-modern">
       <columns>
-         <TableColumn prefWidth="50" text="ID" fx:id="idColumn" />
-         <TableColumn prefWidth="100" text="Date" fx:id="dateColumn" />
-         <TableColumn prefWidth="80" text="Type" fx:id="typeColumn" />
-         <TableColumn prefWidth="100" text="Category" fx:id="categoryColumn" />
-         <TableColumn prefWidth="150" text="Description" fx:id="descriptionColumn" />
-         <TableColumn prefWidth="100" text="Amount" fx:id="amountColumn" />
-         <TableColumn prefWidth="100" text="Payment Method" fx:id="methodColumn" />
-         <TableColumn prefWidth="150" text="Remarks" fx:id="remarksColumn" />
-         <TableColumn prefWidth="80" text="Actions" fx:id="actionsColumn" />
+         <TableColumn prefWidth="60" text="ID" fx:id="idColumn" />
+         <TableColumn prefWidth="110" text="Date" fx:id="dateColumn" />
+         <TableColumn prefWidth="100" text="Type" fx:id="typeColumn" />
+         <TableColumn prefWidth="120" text="Category" fx:id="categoryColumn" />
+         <TableColumn prefWidth="180" text="Description" fx:id="descriptionColumn" />
+         <TableColumn prefWidth="110" text="Amount" fx:id="amountColumn" />
+         <TableColumn prefWidth="130" text="Payment Method" fx:id="methodColumn" />
+         <TableColumn prefWidth="180" text="Remarks" fx:id="remarksColumn" />
       </columns>
    </TableView>
    

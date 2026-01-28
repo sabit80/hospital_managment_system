@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="700" prefWidth="900" spacing="12" styleClass="page" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hms.controller.AddAmbulanceController">
+    <VBox spacing="4">
+        <Label text="Add New Ambulance" styleClass="page-title" />
+        <Label text="Register a new ambulance in the system" styleClass="page-subtitle" />
+    </VBox>
+    
+    <ScrollPane fitToWidth="true" fitToHeight="false" styleClass="form-scroll">
+        <VBox spacing="16" styleClass="card">
+            <GridPane hgap="16" vgap="12">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50" />
+                    <ColumnConstraints percentWidth="50" />
+                </columnConstraints>
+
+                <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Label text="Vehicle Number" styleClass="form-label" />
+                    <TextField fx:id="vehicleNumberField" promptText="Enter vehicle number" styleClass="input" />
+                </VBox>
+                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Label text="Type" styleClass="form-label" />
+                    <ComboBox fx:id="typeCombo" prefWidth="150" styleClass="input" />
+                </VBox>
+
+                <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Label text="Driver Name" styleClass="form-label" />
+                    <TextField fx:id="driverNameField" promptText="Enter driver name" styleClass="input" />
+                </VBox>
+                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Label text="Driver Phone" styleClass="form-label" />
+                    <TextField fx:id="driverPhoneField" promptText="Enter driver phone" styleClass="input" />
+                </VBox>
+
+                <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <Label text="Status" styleClass="form-label" />
+                    <ComboBox fx:id="statusCombo" prefWidth="150" styleClass="input" />
+                </VBox>
+                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <Label text="Current Location" styleClass="form-label" />
+                    <TextField fx:id="currentLocationField" promptText="Enter current location" styleClass="input" />
+                </VBox>
+
+                <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                    <Label text="Capacity" styleClass="form-label" />
+                    <TextField fx:id="capacityField" promptText="Enter capacity" styleClass="input" />
+                </VBox>
+                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <Label text="Last Service Date" styleClass="form-label" />
+                    <DatePicker fx:id="lastServiceDatePicker" prefWidth="200" styleClass="input" />
+                </VBox>
+                
+                <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                    <Label text="Fuel Status" styleClass="form-label" />
+                    <TextField fx:id="fuelStatusField" promptText="Enter fuel status" styleClass="input" />
+                </VBox>
+                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <CheckBox fx:id="equippedCheckbox" text="Fully Equipped" />
+                </VBox>
+            </GridPane>
+            
+            <VBox spacing="6">
+                <Label text="Equipment List" styleClass="form-label" />
+                <TextArea fx:id="equipmentListArea" prefRowCount="3" wrapText="true" promptText="List equipment..." styleClass="input text-area" />
+            </VBox>
+        </VBox>
+    </ScrollPane>
+    
+    <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="form-actions">
+        <Button text="Save Ambulance" onAction="#handleSaveAmbulance" styleClass="primary-button" />
+        <Button text="Clear" onAction="#handleCancel" styleClass="ghost-button" />
+    </HBox>
+    
+    <Label fx:id="statusLabel" text="" styleClass="status-label" />
+</VBox>

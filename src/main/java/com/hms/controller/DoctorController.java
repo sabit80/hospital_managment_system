@@ -5,14 +5,25 @@ import com.hms.service.DoctorService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
 public class DoctorController {
     @FXML private TableView<Doctor> doctorTable;
     @FXML private TextField searchField;
+    @FXML private TableColumn<Doctor, Integer> idColumn;
+    @FXML private TableColumn<Doctor, String> firstNameColumn;
+    @FXML private TableColumn<Doctor, String> lastNameColumn;
+    @FXML private TableColumn<Doctor, String> specializationColumn;
+    @FXML private TableColumn<Doctor, String> phoneColumn;
+    @FXML private TableColumn<Doctor, String> emailColumn;
+    @FXML private TableColumn<Doctor, String> licenseColumn;
+    @FXML private TableColumn<Doctor, String> descriptionColumn;
     
     private DoctorService doctorService;
     private StackPane parentContainer;
@@ -20,7 +31,19 @@ public class DoctorController {
     @FXML
     public void initialize() {
         doctorService = new DoctorService();
+        configureColumns();
         loadDoctors();
+    }
+
+    private void configureColumns() {
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        specializationColumn.setCellValueFactory(new PropertyValueFactory<>("specialization"));
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        licenseColumn.setCellValueFactory(new PropertyValueFactory<>("licenseNumber"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
     }
 
     public void setParentContainer(StackPane container) {
@@ -36,13 +59,13 @@ public class DoctorController {
 
     @FXML
     public void handleSearch() {
-        String searchTerm = searchField.getText().toLowerCase();
+        String searchTerm = searchField.getText() == null ? "" : searchField.getText().toLowerCase();
         List<Doctor> doctors = doctorService.getAllDoctors();
         
         doctorTable.getItems().clear();
         doctors.stream()
-            .filter(d -> d.getFirstName().toLowerCase().contains(searchTerm) || 
-                        d.getSpecialization().toLowerCase().contains(searchTerm))
+            .filter(d -> (d.getFirstName() != null && d.getFirstName().toLowerCase().contains(searchTerm)) ||
+                        (d.getSpecialization() != null && d.getSpecialization().toLowerCase().contains(searchTerm)))
             .forEach(d -> doctorTable.getItems().add(d));
     }
 
@@ -51,11 +74,19 @@ public class DoctorController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hms/views/add-doctor.fxml"));
             Parent view = loader.load();
-            if (parentContainer != null) {
-                parentContainer.getChildren().clear();
-                parentContainer.getChildren().add(view);
-            }
-        } catch (IOException e) {
+            
+            Stage stage = new Stage();
+            stage.setTitle("Add New Doctor");
+            
+            Scene scene = new Scene(view);
+            scene.getStylesheets().add(getClass().getResource("/com/hms/styles.css").toExternalForm());
+            
+            stage.setScene(scene);
+            stage.showAndWait();
+            
+            loadDoctors();
+        } catch (Exception e) {
+            e.printStackTrace();
             showError("Error", "Could not load add doctor form: " + e.getMessage());
         }
     }
@@ -64,14 +95,10 @@ public class DoctorController {
     public void handleEditDoctor() {
         Doctor selected = doctorTable.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showError("Error", "Please select a doctor to edit");
+            showError("No Selection", "Please select a doctor to edit");
             return;
         }
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Edit Doctor");
-        alert.setHeaderText("Edit doctor details");
-        alert.setContentText("Edit form would be displayed here for: " + selected.getFullName());
-        alert.showAndWait();
+        showInfo("Edit Doctor", "Edit functionality - Coming soon for: " + selected.getFullName());
     }
 
     @FXML
