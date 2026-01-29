@@ -108,11 +108,127 @@ public class AmbulanceController {
             alert.showAndWait();
             return;
         }
-        
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Edit Ambulance");
-        alert.setContentText("Edit functionality - Coming soon!");
-        alert.showAndWait();
+
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Edit Ambulance");
+        dialog.setHeaderText("Update ambulance details for " + selected.getVehicleNumber());
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        TextField vehicleNumberField = new TextField(selected.getVehicleNumber());
+        ComboBox<String> typeCombo = new ComboBox<>();
+        typeCombo.getItems().addAll(
+            "Basic Life Support (BLS)",
+            "Advanced Life Support (ALS)",
+            "Mobile ICU",
+            "Air Ambulance",
+            "Patient Transport"
+        );
+        typeCombo.setValue(selected.getType());
+
+        TextField driverNameField = new TextField(selected.getDriverName());
+        TextField driverPhoneField = new TextField(selected.getDriverPhone());
+        ComboBox<String> statusCombo = new ComboBox<>();
+        statusCombo.getItems().addAll("Available", "In Use", "Maintenance", "Out of Service");
+        statusCombo.setValue(selected.getStatus());
+        TextField currentLocationField = new TextField(selected.getCurrentLocation());
+        TextField capacityField = new TextField(String.valueOf(selected.getCapacity()));
+        TextField fuelStatusField = new TextField(selected.getFuelStatus());
+        CheckBox equippedCheckbox = new CheckBox("Equipped");
+        equippedCheckbox.setSelected(selected.isEquipped());
+        TextArea equipmentListArea = new TextArea(selected.getEquipmentList());
+        equipmentListArea.setPrefRowCount(3);
+
+        grid.add(new Label("Vehicle #:"), 0, 0);
+        grid.add(vehicleNumberField, 1, 0);
+        grid.add(new Label("Type:"), 0, 1);
+        grid.add(typeCombo, 1, 1);
+        grid.add(new Label("Driver Name:"), 0, 2);
+        grid.add(driverNameField, 1, 2);
+        grid.add(new Label("Driver Phone:"), 0, 3);
+        grid.add(driverPhoneField, 1, 3);
+        grid.add(new Label("Status:"), 0, 4);
+        grid.add(statusCombo, 1, 4);
+        grid.add(new Label("Location:"), 0, 5);
+        grid.add(currentLocationField, 1, 5);
+        grid.add(new Label("Capacity:"), 0, 6);
+        grid.add(capacityField, 1, 6);
+        grid.add(new Label("Fuel Status:"), 0, 7);
+        grid.add(fuelStatusField, 1, 7);
+        grid.add(equippedCheckbox, 1, 8);
+        grid.add(new Label("Equipment List:"), 0, 9);
+        grid.add(equipmentListArea, 1, 9);
+
+        dialog.getDialogPane().setContent(grid);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        dialog.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                String vehicleNumber = vehicleNumberField.getText().trim();
+                String driverName = driverNameField.getText().trim();
+                String driverPhone = driverPhoneField.getText().trim();
+                String capacityStr = capacityField.getText().trim();
+
+                if (vehicleNumber.isEmpty() || driverName.isEmpty()) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Validation Error");
+                    alert.setContentText("Please fill in required fields (Vehicle Number, Driver Name)");
+                    alert.showAndWait();
+                    return;
+                }
+
+                if (!driverPhone.isEmpty() && driverPhone.length() < 6) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Validation Error");
+                    alert.setContentText("Driver phone must be at least 6 digits");
+                    alert.showAndWait();
+                    return;
+                }
+
+                int capacity = 0;
+                if (!capacityStr.isEmpty()) {
+                    try {
+                        capacity = Integer.parseInt(capacityStr);
+                    } catch (NumberFormatException e) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Validation Error");
+                        alert.setContentText("Capacity must be a valid number");
+                        alert.showAndWait();
+                        return;
+                    }
+                }
+
+                Ambulance updated = new Ambulance();
+                updated.setId(selected.getId());
+                updated.setVehicleNumber(vehicleNumber);
+                updated.setType(typeCombo.getValue() != null ? typeCombo.getValue() : "");
+                updated.setDriverName(driverName);
+                updated.setDriverPhone(driverPhone);
+                updated.setStatus(statusCombo.getValue() != null ? statusCombo.getValue() : "Available");
+                updated.setCurrentLocation(currentLocationField.getText().trim());
+                updated.setCapacity(capacity);
+                updated.setEquipped(equippedCheckbox.isSelected());
+                updated.setEquipmentList(equipmentListArea.getText() == null ? "" : equipmentListArea.getText().trim());
+                updated.setFuelStatus(fuelStatusField.getText() == null ? "" : fuelStatusField.getText().trim());
+                updated.setLastServiceDate(selected.getLastServiceDate());
+
+                if (ambulanceService.updateAmbulance(updated)) {
+                    loadAmbulances();
+                    Alert success = new Alert(Alert.AlertType.INFORMATION);
+                    success.setTitle("Success");
+                    success.setContentText("Ambulance updated successfully");
+                    success.showAndWait();
+                } else {
+                    Alert error = new Alert(Alert.AlertType.ERROR);
+                    error.setTitle("Error");
+                    error.setContentText("Failed to update ambulance");
+                    error.showAndWait();
+                }
+            }
+        });
     }
 
     @FXML

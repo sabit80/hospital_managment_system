@@ -37,6 +37,7 @@
     <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-border-color: #E5E7EB; -fx-border-width: 1 0 0 0; -fx-padding: 12 0 0 0;">
         <Label fx:id="statusLabel" text="Total Patients: 0" style="-fx-font-weight: 600; -fx-text-fill: #374151;" />
         <Region HBox.hgrow="ALWAYS" />
+        <Button text="Edit" onAction="#handleEditPatient" styleClass="ghost-button" />
         <Button text="Refresh" onAction="#loadPatients" styleClass="ghost-button" />
     </HBox>
 </VBox>

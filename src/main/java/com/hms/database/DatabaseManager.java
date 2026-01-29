@@ -202,6 +202,13 @@ public class DatabaseManager {
         addColumnIfNotExists("doctors", "working_hours", "TEXT");
         addColumnIfNotExists("doctors", "office_location", "TEXT");
         addColumnIfNotExists("doctors", "hire_date", "DATE");
+
+        addColumnIfNotExists("appointments", "patient_id", "INTEGER");
+        addColumnIfNotExists("appointments", "doctor_id", "INTEGER");
+        addColumnIfNotExists("appointments", "appointment_date", "DATE");
+        addColumnIfNotExists("appointments", "appointment_time", "TEXT");
+        addColumnIfNotExists("appointments", "status", "TEXT");
+        addColumnIfNotExists("appointments", "notes", "TEXT");
     }
 
     private void addColumnIfNotExists(String tableName, String columnName, String columnType) {

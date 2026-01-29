@@ -135,12 +135,14 @@ public class DashboardController {
 
     @FXML
     private void showAppointmentForm() {
-        showInfo("Coming Soon", "Appointment booking feature will be available soon!");
+        loadView("add-appointment.fxml");
+        statusLabel.setText("New Appointment");
     }
 
     @FXML
     private void showAppointmentList() {
-        showInfo("Coming Soon", "Appointment list feature will be available soon!");
+        loadView("appointments.fxml");
+        statusLabel.setText("Appointment List");
     }
 
     @FXML

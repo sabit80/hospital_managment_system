@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="16" styleClass="page" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hms.controller.AddAppointmentController">
+
+    <VBox spacing="4">
+        <Label text="New Appointment" styleClass="page-title" />
+        <Label text="Assign a patient to a doctor" styleClass="page-subtitle" />
+    </VBox>
+
+    <VBox spacing="12" styleClass="card">
+        <GridPane hgap="12" vgap="12">
+            <columnConstraints>
+                <ColumnConstraints minWidth="140" prefWidth="160" />
+                <ColumnConstraints hgrow="ALWAYS" />
+            </columnConstraints>
+
+            <Label text="Patient" styleClass="form-label" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <ComboBox fx:id="patientCombo" styleClass="input" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+            <Label text="Doctor" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <ComboBox fx:id="doctorCombo" styleClass="input" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+            <Label text="Date" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <HBox spacing="12" GridPane.rowIndex="2" GridPane.columnIndex="1">
+                <RadioButton fx:id="todayRadio" text="Today" />
+                <RadioButton fx:id="tomorrowRadio" text="Tomorrow" />
+                <RadioButton fx:id="nextDayRadio" text="Next Day" />
+            </HBox>
+
+            <Label text="Time" styleClass="form-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+            <TextField fx:id="timeField" promptText="e.g. 10:00 AM" styleClass="input" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+            <Label text="Notes" styleClass="form-label" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <TextArea fx:id="notesArea" prefRowCount="3" styleClass="input" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+        </GridPane>
+    </VBox>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="form-actions">
+        <Label fx:id="statusLabel" text="" styleClass="status-label" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="Cancel" onAction="#handleCancel" styleClass="ghost-button" />
+        <Button text="Save Appointment" onAction="#handleSaveAppointment" styleClass="primary-button" />
+    </HBox>
+</VBox>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="12" styleClass="page" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.hms.controller.AppointmentController">
+
+    <VBox spacing="4">
+        <Label text="Appointments" styleClass="page-title" />
+        <Label text="View and manage scheduled appointments" styleClass="page-subtitle" />
+    </VBox>
+
+    <HBox spacing="10" styleClass="toolbar">
+        <TextField fx:id="searchField" promptText="Search by patient, doctor, or status" HBox.hgrow="ALWAYS" styleClass="input" />
+        <Button text="Search" onAction="#handleSearch" styleClass="ghost-button" />
+    </HBox>
+
+    <TableView fx:id="appointmentTable" VBox.vgrow="ALWAYS" styleClass="table-view-modern">
+        <columns>
+            <TableColumn text="ID" fx:id="idColumn" prefWidth="60" />
+            <TableColumn text="Patient" fx:id="patientColumn" prefWidth="160" />
+            <TableColumn text="Doctor" fx:id="doctorColumn" prefWidth="160" />
+            <TableColumn text="Date" fx:id="dateColumn" prefWidth="120" />
+            <TableColumn text="Time" fx:id="timeColumn" prefWidth="120" />
+            <TableColumn text="Status" fx:id="statusColumn" prefWidth="110" />
+            <TableColumn text="Notes" fx:id="notesColumn" prefWidth="200" />
+        </columns>
+    </TableView>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT" styleClass="form-actions">
+        <Label fx:id="statusLabel" text="Total Appointments: 0" style="-fx-font-weight: 600; -fx-text-fill: #374151;" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="Delete" onAction="#handleDeleteAppointment" styleClass="danger-button" />
+        <Button text="Refresh" onAction="#loadAppointments" styleClass="ghost-button" />
+    </HBox>
+</VBox>
