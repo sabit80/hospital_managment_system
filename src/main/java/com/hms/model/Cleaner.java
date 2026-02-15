@@ -14,14 +14,16 @@ public class Cleaner {
     private String assignedFloor;
     private String assignedArea;
     private String shift;
+    private String status;
 
     public Cleaner() {
         this.hireDate = LocalDate.now();
+        this.status = "Available";
     }
 
     public Cleaner(int id, String firstName, String lastName, String phone,
                    String email, String description, String assignedFloor,
-                   String assignedArea, String shift) {
+                   String assignedArea, String shift, String status) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,6 +33,7 @@ public class Cleaner {
         this.assignedFloor = assignedFloor;
         this.assignedArea = assignedArea;
         this.shift = shift;
+        this.status = status == null || status.isBlank() ? "Available" : status;
         this.hireDate = LocalDate.now();
     }
 
@@ -67,6 +70,9 @@ public class Cleaner {
 
     public String getShift() { return shift; }
     public void setShift(String shift) { this.shift = shift; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
     public String getFullName() {
         return firstName + " " + lastName;

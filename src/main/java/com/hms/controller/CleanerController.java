@@ -23,6 +23,7 @@ public class CleanerController {
     @FXML private TableColumn<Cleaner, String> floorColumn;
     @FXML private TableColumn<Cleaner, String> areaColumn;
     @FXML private TableColumn<Cleaner, String> shiftColumn;
+    @FXML private TableColumn<Cleaner, String> statusColumn;
     @FXML private TableColumn<Cleaner, String> descriptionColumn;
     @FXML private TextField searchField;
     
@@ -41,9 +42,42 @@ public class CleanerController {
         floorColumn.setCellValueFactory(new PropertyValueFactory<>("assignedFloor"));
         areaColumn.setCellValueFactory(new PropertyValueFactory<>("assignedArea"));
         shiftColumn.setCellValueFactory(new PropertyValueFactory<>("shift"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        statusColumn.setCellFactory(column -> new TableCell<Cleaner, String>() {
+            @Override
+            protected void updateItem(String status, boolean empty) {
+                super.updateItem(status, empty);
+                if (empty || status == null) {
+                    setText(null);
+                    setStyle("");
+                    return;
+                }
+                setText(status);
+                if ("Available".equalsIgnoreCase(status)) {
+                    setStyle("-fx-text-fill: #10B981; -fx-font-weight: 600;");
+                } else {
+                    setStyle("-fx-text-fill: #EF4444; -fx-font-weight: 600;");
+                }
+            }
+        });
+
+        setupRowHandlers();
         
         loadCleaners();
+    }
+
+    private void setupRowHandlers() {
+        cleanerTable.setRowFactory(table -> {
+            TableRow<Cleaner> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    showCleanerProfile(row.getItem());
+                }
+            });
+            return row;
+        });
     }
 
     @FXML
@@ -146,5 +180,32 @@ public class CleanerController {
                 }
             }
         });
+    }
+
+    private void showCleanerProfile(Cleaner cleaner) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Cleaner Profile");
+        alert.setHeaderText(cleaner.getFullName());
+        String details = String.join("\n",
+            "Cleaner ID: " + cleaner.getId(),
+            "Phone: " + safe(cleaner.getPhone()),
+            "Email: " + safe(cleaner.getEmail()),
+            "Assigned Floor: " + safe(cleaner.getAssignedFloor()),
+            "Assigned Area: " + safe(cleaner.getAssignedArea()),
+            "Shift: " + safe(cleaner.getShift()),
+            "Working Hours: " + safe(cleaner.getWorkingHours()),
+            "Hire Date: " + valueOrNA(cleaner.getHireDate()),
+            "Description: " + safe(cleaner.getDescription())
+        );
+        alert.setContentText(details);
+        alert.showAndWait();
+    }
+
+    private String safe(String value) {
+        return value == null || value.isBlank() ? "N/A" : value;
+    }
+
+    private String valueOrNA(Object value) {
+        return value == null ? "N/A" : value.toString();
     }
 }

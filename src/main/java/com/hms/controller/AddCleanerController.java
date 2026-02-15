@@ -17,6 +17,7 @@ public class AddCleanerController {
     @FXML private TextField assignedFloorField;
     @FXML private TextField assignedAreaField;
     @FXML private ComboBox<String> shiftCombo;
+    @FXML private ComboBox<String> statusCombo;
     @FXML private TextField workingHoursField;
     @FXML private TextArea descriptionArea;
     @FXML private Label statusLabel;
@@ -33,6 +34,8 @@ public class AddCleanerController {
             "Afternoon (2:00 PM - 10:00 PM)",
             "Night (10:00 PM - 6:00 AM)"
         );
+        statusCombo.getItems().addAll("Available", "In Use");
+        statusCombo.setValue("Available");
     }
 
     @FXML
@@ -44,6 +47,7 @@ public class AddCleanerController {
         String assignedFloor = assignedFloorField.getText().trim();
         String assignedArea = assignedAreaField.getText().trim();
         String shift = shiftCombo.getValue();
+        String status = statusCombo.getValue();
         String workingHours = workingHoursField.getText().trim();
         String description = descriptionArea.getText().trim();
 
@@ -72,6 +76,7 @@ public class AddCleanerController {
         cleaner.setAssignedFloor(assignedFloor);
         cleaner.setAssignedArea(assignedArea);
         cleaner.setShift(shift != null ? shift : "");
+        cleaner.setStatus(status == null || status.isBlank() ? "Available" : status);
         cleaner.setWorkingHours(workingHours);
         cleaner.setDescription(description);
 
@@ -97,6 +102,7 @@ public class AddCleanerController {
         assignedFloorField.clear();
         assignedAreaField.clear();
         shiftCombo.setValue(null);
+        statusCombo.setValue("Available");
         workingHoursField.clear();
         descriptionArea.clear();
         statusLabel.setText("");

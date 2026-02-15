@@ -53,6 +53,11 @@
                     <Label text="Working Hours" styleClass="form-label" />
                     <TextField fx:id="workingHoursField" promptText="e.g., 6:00 AM - 2:00 PM" styleClass="input" />
                 </VBox>
+
+                <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                    <Label text="Status" styleClass="form-label" />
+                    <ComboBox fx:id="statusCombo" prefWidth="150" styleClass="input" />
+                </VBox>
             </GridPane>
             
             <VBox spacing="6">

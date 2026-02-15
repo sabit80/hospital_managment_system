@@ -16,8 +16,8 @@ public class CleanerService {
     public boolean addCleaner(Cleaner cleaner) {
         String sql = """
             INSERT INTO cleaners (first_name, last_name, phone, email, description,
-                                 hire_date, working_hours, assigned_floor, assigned_area, shift)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                 hire_date, working_hours, assigned_floor, assigned_area, shift, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -31,6 +31,7 @@ public class CleanerService {
             pstmt.setString(8, cleaner.getAssignedFloor());
             pstmt.setString(9, cleaner.getAssignedArea());
             pstmt.setString(10, cleaner.getShift());
+            pstmt.setString(11, cleaner.getStatus());
             
             pstmt.executeUpdate();
             return true;
@@ -60,6 +61,8 @@ public class CleanerService {
                 cleaner.setAssignedFloor(rs.getString("assigned_floor"));
                 cleaner.setAssignedArea(rs.getString("assigned_area"));
                 cleaner.setShift(rs.getString("shift"));
+                String status = rs.getString("status");
+                cleaner.setStatus(status == null || status.isBlank() ? "Available" : status);
                 
                 cleaners.add(cleaner);
             }
@@ -74,7 +77,7 @@ public class CleanerService {
         String sql = """
             UPDATE cleaners SET first_name = ?, last_name = ?, phone = ?, email = ?, 
                                description = ?, working_hours = ?, assigned_floor = ?,
-                               assigned_area = ?, shift = ? WHERE id = ?
+                               assigned_area = ?, shift = ?, status = ? WHERE id = ?
         """;
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -87,7 +90,8 @@ public class CleanerService {
             pstmt.setString(7, cleaner.getAssignedFloor());
             pstmt.setString(8, cleaner.getAssignedArea());
             pstmt.setString(9, cleaner.getShift());
-            pstmt.setInt(10, cleaner.getId());
+            pstmt.setString(10, cleaner.getStatus());
+            pstmt.setInt(11, cleaner.getId());
             
             pstmt.executeUpdate();
             return true;

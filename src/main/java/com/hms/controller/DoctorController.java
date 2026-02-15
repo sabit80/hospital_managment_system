@@ -36,7 +36,20 @@ public class DoctorController {
     public void initialize() {
         doctorService = new DoctorService();
         configureColumns();
+        setupRowHandlers();
         loadDoctors();
+    }
+
+    private void setupRowHandlers() {
+        doctorTable.setRowFactory(table -> {
+            TableRow<Doctor> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    showDoctorProfile(row.getItem());
+                }
+            });
+            return row;
+        });
     }
 
     private void configureColumns() {
@@ -231,6 +244,33 @@ public class DoctorController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void showDoctorProfile(Doctor doctor) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Doctor Profile");
+        alert.setHeaderText(doctor.getFullName());
+        String details = String.join("\n",
+            "Doctor ID: " + doctor.getId(),
+            "Specialization: " + safe(doctor.getSpecialization()),
+            "Phone: " + safe(doctor.getPhone()),
+            "Email: " + safe(doctor.getEmail()),
+            "License #: " + safe(doctor.getLicenseNumber()),
+            "Working Hours: " + safe(doctor.getWorkingHours()),
+            "Office Location: " + safe(doctor.getOfficeLocation()),
+            "Hire Date: " + valueOrNA(doctor.getHireDate()),
+            "Description: " + safe(doctor.getDescription())
+        );
+        alert.setContentText(details);
+        alert.showAndWait();
+    }
+
+    private String safe(String value) {
+        return value == null || value.isBlank() ? "N/A" : value;
+    }
+
+    private String valueOrNA(Object value) {
+        return value == null ? "N/A" : value.toString();
     }
 
     private boolean isBlank(String value) {

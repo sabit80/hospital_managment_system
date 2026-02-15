@@ -32,6 +32,7 @@
          <TableColumn prefWidth="100" text="Floor" fx:id="floorColumn" />
          <TableColumn prefWidth="130" text="Area" fx:id="areaColumn" />
          <TableColumn prefWidth="100" text="Shift" fx:id="shiftColumn" />
+         <TableColumn prefWidth="110" text="Status" fx:id="statusColumn" />
          <TableColumn prefWidth="200" text="Description" fx:id="descriptionColumn" />
       </columns>
    </TableView>

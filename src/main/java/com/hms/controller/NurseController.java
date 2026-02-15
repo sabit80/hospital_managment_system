@@ -42,8 +42,22 @@ public class NurseController {
         roomColumn.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
         departmentColumn.setCellValueFactory(new PropertyValueFactory<>("department"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        setupRowHandlers();
         
         loadNurses();
+    }
+
+    private void setupRowHandlers() {
+        nurseTable.setRowFactory(table -> {
+            TableRow<Nurse> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    showNurseProfile(row.getItem());
+                }
+            });
+            return row;
+        });
     }
 
     @FXML
@@ -146,5 +160,33 @@ public class NurseController {
                 }
             }
         });
+    }
+
+    private void showNurseProfile(Nurse nurse) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Nurse Profile");
+        alert.setHeaderText(nurse.getFullName());
+        String details = String.join("\n",
+            "Nurse ID: " + nurse.getId(),
+            "Phone: " + safe(nurse.getPhone()),
+            "Email: " + safe(nurse.getEmail()),
+            "License #: " + nurse.getLicenseNumber(),
+            "Department: " + safe(nurse.getDepartment()),
+            "Floor: " + safe(nurse.getFloor()),
+            "Room: " + safe(nurse.getRoomNumber()),
+            "Working Hours: " + safe(nurse.getWorkingHours()),
+            "Hire Date: " + valueOrNA(nurse.getHireDate()),
+            "Description: " + safe(nurse.getDescription())
+        );
+        alert.setContentText(details);
+        alert.showAndWait();
+    }
+
+    private String safe(String value) {
+        return value == null || value.isBlank() ? "N/A" : value;
+    }
+
+    private String valueOrNA(Object value) {
+        return value == null ? "N/A" : value.toString();
     }
 }

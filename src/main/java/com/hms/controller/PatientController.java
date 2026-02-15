@@ -57,7 +57,20 @@ public class PatientController {
     public void initialize() {
         patientService = new PatientService();
         setupTableColumns();
+        setupRowHandlers();
         loadPatients();
+    }
+
+    private void setupRowHandlers() {
+        patientsTable.setRowFactory(table -> {
+            TableRow<Patient> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    showPatientProfile(row.getItem());
+                }
+            });
+            return row;
+        });
     }
     
     private void setupTableColumns() {
@@ -231,5 +244,31 @@ public class PatientController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void showPatientProfile(Patient patient) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Patient Profile");
+        alert.setHeaderText(patient.getFullName());
+        String details = String.join("\n",
+            "Patient ID: " + patient.getId(),
+            "Gender: " + safe(patient.getGender()),
+            "Date of Birth: " + valueOrNA(patient.getDateOfBirth()),
+            "Blood Group: " + safe(patient.getBloodGroup()),
+            "Phone: " + safe(patient.getPhone()),
+            "Email: " + safe(patient.getEmail()),
+            "Address: " + safe(patient.getAddress()),
+            "Registration Date: " + valueOrNA(patient.getRegistrationDate())
+        );
+        alert.setContentText(details);
+        alert.showAndWait();
+    }
+
+    private String safe(String value) {
+        return value == null || value.isBlank() ? "N/A" : value;
+    }
+
+    private String valueOrNA(Object value) {
+        return value == null ? "N/A" : value.toString();
     }
 }

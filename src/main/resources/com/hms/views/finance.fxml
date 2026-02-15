@@ -32,7 +32,7 @@
    </HBox>
    
    <HBox spacing="10" styleClass="toolbar">
-      <Button text="Add Income" onAction="#handleAddIncome" styleClass="primary-button" />
+      <Button text="Add Bill" onAction="#handleAddBill" styleClass="primary-button" />
       <Button text="Add Expense" onAction="#handleAddExpense" styleClass="ghost-button" />
       <Button text="Export Report" onAction="#handleExportReport" styleClass="ghost-button" />
       <Region HBox.hgrow="ALWAYS" />

@@ -127,7 +127,8 @@ public class DatabaseManager {
                 working_hours TEXT,
                 assigned_floor TEXT,
                 assigned_area TEXT,
-                shift TEXT
+                shift TEXT,
+                status TEXT DEFAULT 'Available'
             )
         """;
         executeUpdate(sql);
@@ -209,6 +210,8 @@ public class DatabaseManager {
         addColumnIfNotExists("appointments", "appointment_time", "TEXT");
         addColumnIfNotExists("appointments", "status", "TEXT");
         addColumnIfNotExists("appointments", "notes", "TEXT");
+
+        addColumnIfNotExists("cleaners", "status", "TEXT");
     }
 
     private void addColumnIfNotExists(String tableName, String columnName, String columnType) {

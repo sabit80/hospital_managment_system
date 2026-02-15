@@ -149,6 +149,15 @@
                         <Label text="All employees" style="-fx-font-size: 13px; -fx-text-fill: #94A3B8;"/>
                     </VBox>
                 </GridPane>
+
+                <VBox spacing="12" alignment="TOP_LEFT" styleClass="card" prefWidth="720">
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Today's Appointments" style="-fx-font-weight: 700; -fx-text-fill: #0F172A; -fx-font-size: 15px;"/>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="todayAppointmentsCountLabel" text="0" styleClass="status-label" />
+                    </HBox>
+                    <VBox fx:id="todayAppointmentsBox" spacing="8" />
+                </VBox>
             </VBox>
         </StackPane>
     </center>

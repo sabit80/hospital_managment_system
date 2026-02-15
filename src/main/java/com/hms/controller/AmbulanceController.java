@@ -44,8 +44,40 @@ public class AmbulanceController {
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         locationColumn.setCellValueFactory(new PropertyValueFactory<>("currentLocation"));
         capacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
+
+        statusColumn.setCellFactory(column -> new TableCell<Ambulance, String>() {
+            @Override
+            protected void updateItem(String status, boolean empty) {
+                super.updateItem(status, empty);
+                if (empty || status == null) {
+                    setText(null);
+                    setStyle("");
+                    return;
+                }
+                setText(status);
+                if ("Available".equalsIgnoreCase(status)) {
+                    setStyle("-fx-text-fill: #10B981; -fx-font-weight: 600;");
+                } else {
+                    setStyle("-fx-text-fill: #EF4444; -fx-font-weight: 600;");
+                }
+            }
+        });
+
+        setupRowHandlers();
         
         loadAmbulances();
+    }
+
+    private void setupRowHandlers() {
+        ambulanceTable.setRowFactory(table -> {
+            TableRow<Ambulance> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    showAmbulanceProfile(row.getItem());
+                }
+            });
+            return row;
+        });
     }
 
     @FXML
@@ -321,5 +353,34 @@ public class AmbulanceController {
                 }
             }
         });
+    }
+
+    private void showAmbulanceProfile(Ambulance ambulance) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Ambulance Profile");
+        alert.setHeaderText(ambulance.getVehicleNumber());
+        String details = String.join("\n",
+            "Ambulance ID: " + ambulance.getId(),
+            "Type: " + safe(ambulance.getType()),
+            "Driver: " + safe(ambulance.getDriverName()),
+            "Driver Phone: " + safe(ambulance.getDriverPhone()),
+            "Status: " + safe(ambulance.getStatus()),
+            "Location: " + safe(ambulance.getCurrentLocation()),
+            "Capacity: " + ambulance.getCapacity(),
+            "Equipped: " + (ambulance.isEquipped() ? "Yes" : "No"),
+            "Fuel Status: " + safe(ambulance.getFuelStatus()),
+            "Last Service: " + valueOrNA(ambulance.getLastServiceDate()),
+            "Equipment List: " + safe(ambulance.getEquipmentList())
+        );
+        alert.setContentText(details);
+        alert.showAndWait();
+    }
+
+    private String safe(String value) {
+        return value == null || value.isBlank() ? "N/A" : value;
+    }
+
+    private String valueOrNA(Object value) {
+        return value == null ? "N/A" : value.toString();
     }
 }
