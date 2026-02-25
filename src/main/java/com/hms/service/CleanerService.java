@@ -16,8 +16,8 @@ public class CleanerService {
     public boolean addCleaner(Cleaner cleaner) {
         String sql = """
             INSERT INTO cleaners (first_name, last_name, phone, email, description,
-                                 hire_date, working_hours, assigned_floor, assigned_area, shift, status)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                 hire_date, working_hours, assigned_floor, assigned_area, shift, status, salary)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -32,6 +32,7 @@ public class CleanerService {
             pstmt.setString(9, cleaner.getAssignedArea());
             pstmt.setString(10, cleaner.getShift());
             pstmt.setString(11, cleaner.getStatus());
+            pstmt.setDouble(12, cleaner.getSalary());
             
             pstmt.executeUpdate();
             return true;
@@ -63,6 +64,7 @@ public class CleanerService {
                 cleaner.setShift(rs.getString("shift"));
                 String status = rs.getString("status");
                 cleaner.setStatus(status == null || status.isBlank() ? "Available" : status);
+                cleaner.setSalary(rs.getDouble("salary"));
                 
                 cleaners.add(cleaner);
             }
@@ -77,7 +79,7 @@ public class CleanerService {
         String sql = """
             UPDATE cleaners SET first_name = ?, last_name = ?, phone = ?, email = ?, 
                                description = ?, working_hours = ?, assigned_floor = ?,
-                               assigned_area = ?, shift = ?, status = ? WHERE id = ?
+                               assigned_area = ?, shift = ?, status = ?, salary = ? WHERE id = ?
         """;
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -91,7 +93,8 @@ public class CleanerService {
             pstmt.setString(8, cleaner.getAssignedArea());
             pstmt.setString(9, cleaner.getShift());
             pstmt.setString(10, cleaner.getStatus());
-            pstmt.setInt(11, cleaner.getId());
+            pstmt.setDouble(11, cleaner.getSalary());
+            pstmt.setInt(12, cleaner.getId());
             
             pstmt.executeUpdate();
             return true;

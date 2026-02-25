@@ -2,6 +2,7 @@ package com.hms.service;
 
 import com.hms.database.DatabaseManager;
 import com.hms.model.Finance;
+import com.hms.model.FinanceDailySummary;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -139,5 +140,35 @@ public class FinanceService {
             System.err.println("Error deleting transaction: " + e.getMessage());
             return false;
         }
+    }
+
+    public List<FinanceDailySummary> getDailySummary(LocalDate startDate, LocalDate endDate) {
+        List<FinanceDailySummary> summaries = new ArrayList<>();
+        String sql = """
+            SELECT transaction_date,
+                   SUM(CASE WHEN type = 'Income' THEN amount ELSE 0 END) AS income,
+                   SUM(CASE WHEN type = 'Expense' THEN amount ELSE 0 END) AS expense
+            FROM finance
+            WHERE transaction_date BETWEEN ? AND ?
+            GROUP BY transaction_date
+            ORDER BY transaction_date ASC
+        """;
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setDate(1, Date.valueOf(startDate));
+            pstmt.setDate(2, Date.valueOf(endDate));
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                LocalDate date = rs.getDate("transaction_date").toLocalDate();
+                double income = rs.getDouble("income");
+                double expense = rs.getDouble("expense");
+                summaries.add(new FinanceDailySummary(date, income, expense));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching daily summary: " + e.getMessage());
+        }
+
+        return summaries;
     }
 }

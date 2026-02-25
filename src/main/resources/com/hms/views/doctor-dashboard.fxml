@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.hms.controller.DoctorDashboardController">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-background-color: #FFFFFF; -fx-padding: 18 24; -fx-border-color: #E5E7EB; -fx-border-width: 0 0 1 0;">
+            <VBox spacing="4">
+                <Label text="Doctor Dashboard" styleClass="header-title" />
+                <Label text="Today\'s schedule and operations" styleClass="header-subtitle" />
+            </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button text="Back to Roles" onAction="#handleBack" styleClass="ghost-button" />
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="16" styleClass="page">
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <Label text="Doctor" style="-fx-font-weight: 600; -fx-text-fill: #0F172A;" />
+                <ComboBox fx:id="doctorCombo" prefWidth="260" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="statusLabel" text="" style="-fx-text-fill: #64748B;" />
+            </HBox>
+
+            <HBox spacing="16">
+                <VBox spacing="8" alignment="CENTER" styleClass="stat-card">
+                    <Label text="Today\'s Serials" style="-fx-font-size: 12px; -fx-text-fill: #6B7280; -fx-font-weight: 600;" />
+                    <Label fx:id="appointmentCountLabel" text="0" style="-fx-font-size: 26px; -fx-text-fill: #0EA5E9; -fx-font-weight: 700;" />
+                </VBox>
+                <VBox spacing="8" alignment="CENTER" styleClass="stat-card">
+                    <Label text="Operations Today" style="-fx-font-size: 12px; -fx-text-fill: #6B7280; -fx-font-weight: 600;" />
+                    <Label fx:id="operationCountLabel" text="0" style="-fx-font-size: 26px; -fx-text-fill: #F59E0B; -fx-font-weight: 700;" />
+                </VBox>
+            </HBox>
+
+            <HBox spacing="16">
+                <VBox spacing="12" styleClass="card" prefWidth="520">
+                    <Label text="Today\'s Appointments" style="-fx-font-weight: 700; -fx-text-fill: #0F172A;" />
+                    <VBox fx:id="appointmentsBox" spacing="8" />
+                </VBox>
+                <VBox spacing="12" styleClass="card" prefWidth="520">
+                    <Label text="Today\'s Operations" style="-fx-font-weight: 700; -fx-text-fill: #0F172A;" />
+                    <VBox fx:id="operationsBox" spacing="8" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+
+    <padding>
+        <Insets top="0" right="0" bottom="12" left="0" />
+    </padding>
+</BorderPane>

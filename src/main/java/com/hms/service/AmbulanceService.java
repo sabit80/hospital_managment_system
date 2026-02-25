@@ -17,8 +17,9 @@ public class AmbulanceService {
     public boolean addAmbulance(Ambulance ambulance) {
         String sql = """
             INSERT INTO ambulances (vehicle_number, type, driver_name, driver_phone, status,
-                                   current_location, last_service_date, capacity, equipped, equipment_list, fuel_status)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                   current_location, last_service_date, capacity, equipped, equipment_list, fuel_status,
+                                   operational_cost, service_fee)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -33,6 +34,8 @@ public class AmbulanceService {
             pstmt.setBoolean(9, ambulance.isEquipped());
             pstmt.setString(10, ambulance.getEquipmentList());
             pstmt.setString(11, ambulance.getFuelStatus());
+            pstmt.setDouble(12, ambulance.getOperationalCost());
+            pstmt.setDouble(13, ambulance.getServiceFee());
             
             pstmt.executeUpdate();
             return true;
@@ -63,6 +66,8 @@ public class AmbulanceService {
                 ambulance.setEquipped(rs.getBoolean("equipped"));
                 ambulance.setEquipmentList(rs.getString("equipment_list"));
                 ambulance.setFuelStatus(rs.getString("fuel_status"));
+                ambulance.setOperationalCost(rs.getDouble("operational_cost"));
+                ambulance.setServiceFee(rs.getDouble("service_fee"));
                 
                 ambulances.add(ambulance);
             }
@@ -77,7 +82,7 @@ public class AmbulanceService {
         String sql = """
             UPDATE ambulances SET vehicle_number = ?, type = ?, driver_name = ?, driver_phone = ?,
                                  status = ?, current_location = ?, capacity = ?, equipped = ?,
-                                 equipment_list = ?, fuel_status = ? WHERE id = ?
+                                 equipment_list = ?, fuel_status = ?, operational_cost = ?, service_fee = ? WHERE id = ?
         """;
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -91,7 +96,9 @@ public class AmbulanceService {
             pstmt.setBoolean(8, ambulance.isEquipped());
             pstmt.setString(9, ambulance.getEquipmentList());
             pstmt.setString(10, ambulance.getFuelStatus());
-            pstmt.setInt(11, ambulance.getId());
+            pstmt.setDouble(11, ambulance.getOperationalCost());
+            pstmt.setDouble(12, ambulance.getServiceFee());
+            pstmt.setInt(13, ambulance.getId());
             
             pstmt.executeUpdate();
             return true;

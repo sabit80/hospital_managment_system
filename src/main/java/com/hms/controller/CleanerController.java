@@ -195,6 +195,7 @@ public class CleanerController {
             "Shift: " + safe(cleaner.getShift()),
             "Working Hours: " + safe(cleaner.getWorkingHours()),
             "Hire Date: " + valueOrNA(cleaner.getHireDate()),
+            "Salary: " + String.format("%.2f", cleaner.getSalary()),
             "Description: " + safe(cleaner.getDescription())
         );
         alert.setContentText(details);

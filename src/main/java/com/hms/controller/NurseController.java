@@ -176,6 +176,7 @@ public class NurseController {
             "Room: " + safe(nurse.getRoomNumber()),
             "Working Hours: " + safe(nurse.getWorkingHours()),
             "Hire Date: " + valueOrNA(nurse.getHireDate()),
+            "Salary: " + String.format("%.2f", nurse.getSalary()),
             "Description: " + safe(nurse.getDescription())
         );
         alert.setContentText(details);

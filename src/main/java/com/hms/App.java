@@ -13,7 +13,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("views/dashboard"), 1200, 700);
+        scene = new Scene(loadFXML("views/role-selection"), 1200, 700);
         scene.getStylesheets().add(App.class.getResource("styles.css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Hospital Management System");

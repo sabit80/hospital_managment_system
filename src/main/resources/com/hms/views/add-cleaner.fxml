@@ -58,6 +58,11 @@
                     <Label text="Status" styleClass="form-label" />
                     <ComboBox fx:id="statusCombo" prefWidth="150" styleClass="input" />
                 </VBox>
+
+                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <Label text="Monthly Salary" styleClass="form-label" />
+                    <TextField fx:id="salaryField" promptText="Enter salary" styleClass="input" />
+                </VBox>
             </GridPane>
             
             <VBox spacing="6">

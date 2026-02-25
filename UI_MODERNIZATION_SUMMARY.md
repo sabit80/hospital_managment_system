@@ -113,7 +113,7 @@ public String getLastError() { return lastError; }
 ## 📁 Files Modified
 
 ### Views (FXML)
-- ✅ dashboard.fxml
+- ✅ manager-dashboard.fxml
 - ✅ doctors.fxml
 - ✅ add-doctor.fxml
 - ✅ patient-list.fxml
@@ -125,7 +125,7 @@ public String getLastError() { return lastError; }
 - ✅ finance.fxml
 
 ### Controllers (Java)
-- ✅ DashboardController.java
+- ✅ ManagerDashboardController.java
 - ✅ DoctorController.java
 - ✅ AddDoctorController.java
 - ✅ PatientController.java

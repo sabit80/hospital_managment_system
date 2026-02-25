@@ -61,6 +61,15 @@
                 <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="4">
                     <CheckBox fx:id="equippedCheckbox" text="Fully Equipped" />
                 </VBox>
+
+                <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                    <Label text="Operational Cost" styleClass="form-label" />
+                    <TextField fx:id="operationalCostField" promptText="Enter cost" styleClass="input" />
+                </VBox>
+                <VBox spacing="6" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                    <Label text="Service Fee" styleClass="form-label" />
+                    <TextField fx:id="serviceFeeField" promptText="Enter fee" styleClass="input" />
+                </VBox>
             </GridPane>
             
             <VBox spacing="6">

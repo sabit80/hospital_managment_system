@@ -58,6 +58,11 @@
                     <Label text="Working Hours" styleClass="form-label" />
                     <TextField fx:id="workingHoursField" promptText="e.g., 8:00 AM - 4:00 PM" styleClass="input" />
                 </VBox>
+
+                <VBox spacing="6" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="2">
+                    <Label text="Monthly Salary" styleClass="form-label" />
+                    <TextField fx:id="salaryField" promptText="Enter salary" styleClass="input" />
+                </VBox>
             </GridPane>
             
             <VBox spacing="6">

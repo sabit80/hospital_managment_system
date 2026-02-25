@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.hms.controller.RoleSelectionController" styleClass="role-screen">
+    <center>
+        <VBox alignment="CENTER" spacing="20">
+            <VBox alignment="CENTER" spacing="6">
+                <Label text="Welcome to Hospital Management" styleClass="header-title" />
+                <Label text="Choose your role to continue" styleClass="header-subtitle" />
+            </VBox>
+
+            <HBox spacing="18" alignment="CENTER">
+                <VBox spacing="10" alignment="TOP_LEFT" styleClass="role-card" prefWidth="260">
+                    <Label text="Admin" styleClass="role-title" />
+                    <Label text="Finance insights, reports, and full admin dashboard" styleClass="role-subtitle" wrapText="true" />
+                    <HBox spacing="6">
+                        <Label text="Finance" styleClass="tag" />
+                        <Label text="Admin" styleClass="tag" />
+                    </HBox>
+                    <Region VBox.vgrow="ALWAYS" />
+                    <Button text="Enter as Admin" onAction="#openManager" styleClass="primary-button" />
+                </VBox>
+
+                <VBox spacing="10" alignment="TOP_LEFT" styleClass="role-card" prefWidth="260">
+                    <Label text="Doctor" styleClass="role-title" />
+                    <Label text="See today\'s serials and operations" styleClass="role-subtitle" wrapText="true" />
+                    <HBox spacing="6">
+                        <Label text="Schedule" styleClass="tag" />
+                        <Label text="Operations" styleClass="tag" />
+                    </HBox>
+                    <Region VBox.vgrow="ALWAYS" />
+                    <Button text="Enter as Doctor" onAction="#openDoctor" styleClass="primary-button" />
+                </VBox>
+
+                <VBox spacing="10" alignment="TOP_LEFT" styleClass="role-card" prefWidth="260">
+                    <Label text="Receptionist" styleClass="role-title" />
+                    <Label text="Appointments and ward assignment" styleClass="role-subtitle" wrapText="true" />
+                    <HBox spacing="6">
+                        <Label text="Admissions" styleClass="tag" />
+                        <Label text="Beds" styleClass="tag" />
+                    </HBox>
+                    <Region VBox.vgrow="ALWAYS" />
+                    <Button text="Enter as Receptionist" onAction="#openReceptionist" styleClass="primary-button" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+
+    <padding>
+        <Insets top="32" right="32" bottom="32" left="32" />
+    </padding>
+</BorderPane>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.hms.controller.ReceptionistDashboardController">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="12" style="-fx-background-color: #FFFFFF; -fx-padding: 18 24; -fx-border-color: #E5E7EB; -fx-border-width: 0 0 1 0;">
+            <VBox spacing="4">
+                <Label text="Reception Desk" styleClass="header-title" />
+                <Label text="Appointments, admissions, and bed status" styleClass="header-subtitle" />
+            </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button text="Back to Roles" onAction="#handleBack" styleClass="ghost-button" />
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="16" styleClass="page">
+            <HBox spacing="16">
+                <VBox spacing="8" alignment="CENTER" styleClass="stat-card">
+                    <Label text="Vacant Ward Beds" style="-fx-font-size: 12px; -fx-text-fill: #6B7280; -fx-font-weight: 600;" />
+                    <Label fx:id="vacantWardLabel" text="0" style="-fx-font-size: 26px; -fx-text-fill: #0EA5E9; -fx-font-weight: 700;" />
+                </VBox>
+                <VBox spacing="8" alignment="CENTER" styleClass="stat-card">
+                    <Label text="Vacant ICU Beds" style="-fx-font-size: 12px; -fx-text-fill: #6B7280; -fx-font-weight: 600;" />
+                    <Label fx:id="vacantIcuLabel" text="0" style="-fx-font-size: 26px; -fx-text-fill: #8B5CF6; -fx-font-weight: 700;" />
+                </VBox>
+                <VBox spacing="8" alignment="CENTER" styleClass="stat-card">
+                    <Label text="Vacant CCU Beds" style="-fx-font-size: 12px; -fx-text-fill: #6B7280; -fx-font-weight: 600;" />
+                    <Label fx:id="vacantCcuLabel" text="0" style="-fx-font-size: 26px; -fx-text-fill: #10B981; -fx-font-weight: 700;" />
+                </VBox>
+            </HBox>
+
+            <HBox spacing="16">
+                <VBox spacing="12" styleClass="card" prefWidth="420">
+                    <Label text="Appointments" style="-fx-font-weight: 700; -fx-text-fill: #0F172A;" />
+                    <Label text="Create or review appointments" style="-fx-text-fill: #64748B;" />
+                    <Button text="New Appointment" onAction="#openAppointmentForm" styleClass="primary-button" />
+                    <Button text="View Appointments" onAction="#openAppointmentList" styleClass="ghost-button" />
+                </VBox>
+
+                <VBox spacing="12" styleClass="card" prefWidth="520">
+                    <Label text="Assign Patient to Bed" style="-fx-font-weight: 700; -fx-text-fill: #0F172A;" />
+                    <VBox spacing="6">
+                        <Label text="Patient" styleClass="form-label" />
+                        <ComboBox fx:id="patientCombo" prefWidth="360" />
+                    </VBox>
+                    <VBox spacing="6">
+                        <Label text="Vacant Bed" styleClass="form-label" />
+                        <ComboBox fx:id="bedCombo" prefWidth="360" />
+                    </VBox>
+                    <Button text="Assign Bed" onAction="#handleAssignBed" styleClass="primary-button" />
+                    <Label fx:id="assignStatusLabel" text="" style="-fx-text-fill: #64748B;" />
+                </VBox>
+            </HBox>
+
+            <VBox spacing="10" styleClass="card">
+                <Label text="Available Beds" style="-fx-font-weight: 700; -fx-text-fill: #0F172A;" />
+                <ListView fx:id="availableBedsList" prefHeight="200" />
+            </VBox>
+        </VBox>
+    </center>
+
+    <padding>
+        <Insets top="0" right="0" bottom="12" left="0" />
+    </padding>
+</BorderPane>

@@ -19,6 +19,7 @@ public class AddCleanerController {
     @FXML private ComboBox<String> shiftCombo;
     @FXML private ComboBox<String> statusCombo;
     @FXML private TextField workingHoursField;
+    @FXML private TextField salaryField;
     @FXML private TextArea descriptionArea;
     @FXML private Label statusLabel;
 
@@ -49,6 +50,7 @@ public class AddCleanerController {
         String shift = shiftCombo.getValue();
         String status = statusCombo.getValue();
         String workingHours = workingHoursField.getText().trim();
+        String salaryText = salaryField.getText().trim();
         String description = descriptionArea.getText().trim();
 
         // Validation
@@ -67,6 +69,12 @@ public class AddCleanerController {
             return;
         }
 
+        Double salary = parseAmountStrict(salaryText);
+        if (salary == null || salary < 0) {
+            showStatus("Salary must be a valid number", "error");
+            return;
+        }
+
         // Create cleaner object
         Cleaner cleaner = new Cleaner();
         cleaner.setFirstName(firstName);
@@ -78,6 +86,7 @@ public class AddCleanerController {
         cleaner.setShift(shift != null ? shift : "");
         cleaner.setStatus(status == null || status.isBlank() ? "Available" : status);
         cleaner.setWorkingHours(workingHours);
+        cleaner.setSalary(salary);
         cleaner.setDescription(description);
 
         // Save to database
@@ -104,8 +113,20 @@ public class AddCleanerController {
         shiftCombo.setValue(null);
         statusCombo.setValue("Available");
         workingHoursField.clear();
+        salaryField.clear();
         descriptionArea.clear();
         statusLabel.setText("");
+    }
+
+    private Double parseAmountStrict(String raw) {
+        if (raw == null || raw.isBlank()) {
+            return 0.0;
+        }
+        try {
+            return Double.parseDouble(raw.trim());
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     private void showStatus(String message, String type) {

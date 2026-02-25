@@ -20,6 +20,8 @@ public class AddAmbulanceController {
     @FXML private DatePicker lastServiceDatePicker;
     @FXML private TextField fuelStatusField;
     @FXML private CheckBox equippedCheckbox;
+    @FXML private TextField operationalCostField;
+    @FXML private TextField serviceFeeField;
     @FXML private TextArea equipmentListArea;
     @FXML private Label statusLabel;
 
@@ -55,6 +57,8 @@ public class AddAmbulanceController {
         LocalDate lastServiceDate = lastServiceDatePicker.getValue();
         String fuelStatus = fuelStatusField.getText().trim();
         boolean equipped = equippedCheckbox.isSelected();
+        String operationalCostText = operationalCostField.getText().trim();
+        String serviceFeeText = serviceFeeField.getText().trim();
         String equipmentList = equipmentListArea.getText().trim();
 
         // Validation
@@ -79,6 +83,18 @@ public class AddAmbulanceController {
             }
         }
 
+        Double operationalCost = parseAmountStrict(operationalCostText);
+        if (operationalCost == null || operationalCost < 0) {
+            showStatus("Operational cost must be a valid number", "error");
+            return;
+        }
+
+        Double serviceFee = parseAmountStrict(serviceFeeText);
+        if (serviceFee == null || serviceFee < 0) {
+            showStatus("Service fee must be a valid number", "error");
+            return;
+        }
+
         // Create ambulance object
         Ambulance ambulance = new Ambulance();
         ambulance.setVehicleNumber(vehicleNumber);
@@ -94,6 +110,8 @@ public class AddAmbulanceController {
         ambulance.setFuelStatus(fuelStatus);
         ambulance.setEquipped(equipped);
         ambulance.setEquipmentList(equipmentList);
+        ambulance.setOperationalCost(operationalCost);
+        ambulance.setServiceFee(serviceFee);
 
         // Save to database
         if (ambulanceService.addAmbulance(ambulance)) {
@@ -119,9 +137,22 @@ public class AddAmbulanceController {
         capacityField.clear();
         lastServiceDatePicker.setValue(null);
         fuelStatusField.clear();
+        operationalCostField.clear();
+        serviceFeeField.clear();
         equippedCheckbox.setSelected(false);
         equipmentListArea.clear();
         statusLabel.setText("");
+    }
+
+    private Double parseAmountStrict(String raw) {
+        if (raw == null || raw.isBlank()) {
+            return 0.0;
+        }
+        try {
+            return Double.parseDouble(raw.trim());
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     private void showStatus(String message, String type) {

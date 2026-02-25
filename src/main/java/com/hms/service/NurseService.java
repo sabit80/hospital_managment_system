@@ -16,8 +16,8 @@ public class NurseService {
     public boolean addNurse(Nurse nurse) {
         String sql = """
             INSERT INTO nurses (first_name, last_name, phone, email, license_number, description,
-                               hire_date, working_hours, floor, room_number, department)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                               hire_date, working_hours, floor, room_number, department, salary)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -32,6 +32,7 @@ public class NurseService {
             pstmt.setString(9, nurse.getFloor());
             pstmt.setString(10, nurse.getRoomNumber());
             pstmt.setString(11, nurse.getDepartment());
+            pstmt.setDouble(12, nurse.getSalary());
             
             pstmt.executeUpdate();
             return true;
@@ -62,6 +63,7 @@ public class NurseService {
                 nurse.setFloor(rs.getString("floor"));
                 nurse.setRoomNumber(rs.getString("room_number"));
                 nurse.setDepartment(rs.getString("department"));
+                nurse.setSalary(rs.getDouble("salary"));
                 
                 nurses.add(nurse);
             }
@@ -76,7 +78,7 @@ public class NurseService {
         String sql = """
             UPDATE nurses SET first_name = ?, last_name = ?, phone = ?, email = ?, 
                              license_number = ?, description = ?, working_hours = ?,
-                             floor = ?, room_number = ?, department = ? WHERE id = ?
+                             floor = ?, room_number = ?, department = ?, salary = ? WHERE id = ?
         """;
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -90,7 +92,8 @@ public class NurseService {
             pstmt.setString(8, nurse.getFloor());
             pstmt.setString(9, nurse.getRoomNumber());
             pstmt.setString(10, nurse.getDepartment());
-            pstmt.setInt(11, nurse.getId());
+            pstmt.setDouble(11, nurse.getSalary());
+            pstmt.setInt(12, nurse.getId());
             
             pstmt.executeUpdate();
             return true;

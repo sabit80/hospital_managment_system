@@ -37,6 +37,9 @@ public class DatabaseManager {
         createReceptionTable();
         createAmbulancesTable();
         createFinanceTable();
+        createWardsTable();
+        createBedsTable();
+        createOperationsTable();
         runMigrations();
     }
 
@@ -108,7 +111,8 @@ public class DatabaseManager {
                 working_hours TEXT,
                 floor TEXT,
                 room_number TEXT,
-                department TEXT
+                department TEXT,
+                salary REAL DEFAULT 0
             )
         """;
         executeUpdate(sql);
@@ -128,7 +132,8 @@ public class DatabaseManager {
                 assigned_floor TEXT,
                 assigned_area TEXT,
                 shift TEXT,
-                status TEXT DEFAULT 'Available'
+                status TEXT DEFAULT 'Available',
+                salary REAL DEFAULT 0
             )
         """;
         executeUpdate(sql);
@@ -167,7 +172,9 @@ public class DatabaseManager {
                 capacity INTEGER,
                 equipped BOOLEAN DEFAULT 0,
                 equipment_list TEXT,
-                fuel_status TEXT
+                fuel_status TEXT,
+                operational_cost REAL DEFAULT 0,
+                service_fee REAL DEFAULT 0
             )
         """;
         executeUpdate(sql);
@@ -184,6 +191,50 @@ public class DatabaseManager {
                 amount REAL NOT NULL,
                 payment_method TEXT,
                 remarks TEXT
+            )
+        """;
+        executeUpdate(sql);
+    }
+
+    private void createWardsTable() {
+        String sql = """
+            CREATE TABLE IF NOT EXISTS wards (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                type TEXT NOT NULL,
+                total_beds INTEGER NOT NULL
+            )
+        """;
+        executeUpdate(sql);
+    }
+
+    private void createBedsTable() {
+        String sql = """
+            CREATE TABLE IF NOT EXISTS beds (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                ward_id INTEGER NOT NULL,
+                bed_number TEXT NOT NULL,
+                status TEXT DEFAULT 'Vacant',
+                patient_id INTEGER,
+                FOREIGN KEY (ward_id) REFERENCES wards(id),
+                FOREIGN KEY (patient_id) REFERENCES patients(id)
+            )
+        """;
+        executeUpdate(sql);
+    }
+
+    private void createOperationsTable() {
+        String sql = """
+            CREATE TABLE IF NOT EXISTS operations (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                doctor_id INTEGER NOT NULL,
+                patient_id INTEGER,
+                operation_date DATE NOT NULL,
+                operation_time TEXT,
+                description TEXT,
+                status TEXT DEFAULT 'Scheduled',
+                FOREIGN KEY (doctor_id) REFERENCES doctors(id),
+                FOREIGN KEY (patient_id) REFERENCES patients(id)
             )
         """;
         executeUpdate(sql);
@@ -212,6 +263,10 @@ public class DatabaseManager {
         addColumnIfNotExists("appointments", "notes", "TEXT");
 
         addColumnIfNotExists("cleaners", "status", "TEXT");
+        addColumnIfNotExists("nurses", "salary", "REAL");
+        addColumnIfNotExists("cleaners", "salary", "REAL");
+        addColumnIfNotExists("ambulances", "operational_cost", "REAL");
+        addColumnIfNotExists("ambulances", "service_fee", "REAL");
     }
 
     private void addColumnIfNotExists(String tableName, String columnName, String columnType) {

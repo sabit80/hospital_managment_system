@@ -169,6 +169,8 @@ public class AmbulanceController {
         TextField currentLocationField = new TextField(selected.getCurrentLocation());
         TextField capacityField = new TextField(String.valueOf(selected.getCapacity()));
         TextField fuelStatusField = new TextField(selected.getFuelStatus());
+        TextField operationalCostField = new TextField(String.valueOf(selected.getOperationalCost()));
+        TextField serviceFeeField = new TextField(String.valueOf(selected.getServiceFee()));
         CheckBox equippedCheckbox = new CheckBox("Equipped");
         equippedCheckbox.setSelected(selected.isEquipped());
         TextArea equipmentListArea = new TextArea(selected.getEquipmentList());
@@ -191,8 +193,12 @@ public class AmbulanceController {
         grid.add(new Label("Fuel Status:"), 0, 7);
         grid.add(fuelStatusField, 1, 7);
         grid.add(equippedCheckbox, 1, 8);
-        grid.add(new Label("Equipment List:"), 0, 9);
-        grid.add(equipmentListArea, 1, 9);
+        grid.add(new Label("Operational Cost:"), 0, 9);
+        grid.add(operationalCostField, 1, 9);
+        grid.add(new Label("Service Fee:"), 0, 10);
+        grid.add(serviceFeeField, 1, 10);
+        grid.add(new Label("Equipment List:"), 0, 11);
+        grid.add(equipmentListArea, 1, 11);
 
         dialog.getDialogPane().setContent(grid);
         dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
@@ -233,6 +239,24 @@ public class AmbulanceController {
                     }
                 }
 
+                Double operationalCost = parseAmountStrict(operationalCostField.getText());
+                if (operationalCost == null || operationalCost < 0) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Validation Error");
+                    alert.setContentText("Operational cost must be a valid number");
+                    alert.showAndWait();
+                    return;
+                }
+
+                Double serviceFee = parseAmountStrict(serviceFeeField.getText());
+                if (serviceFee == null || serviceFee < 0) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Validation Error");
+                    alert.setContentText("Service fee must be a valid number");
+                    alert.showAndWait();
+                    return;
+                }
+
                 Ambulance updated = new Ambulance();
                 updated.setId(selected.getId());
                 updated.setVehicleNumber(vehicleNumber);
@@ -245,6 +269,8 @@ public class AmbulanceController {
                 updated.setEquipped(equippedCheckbox.isSelected());
                 updated.setEquipmentList(equipmentListArea.getText() == null ? "" : equipmentListArea.getText().trim());
                 updated.setFuelStatus(fuelStatusField.getText() == null ? "" : fuelStatusField.getText().trim());
+                updated.setOperationalCost(operationalCost);
+                updated.setServiceFee(serviceFee);
                 updated.setLastServiceDate(selected.getLastServiceDate());
 
                 if (ambulanceService.updateAmbulance(updated)) {
@@ -369,11 +395,24 @@ public class AmbulanceController {
             "Capacity: " + ambulance.getCapacity(),
             "Equipped: " + (ambulance.isEquipped() ? "Yes" : "No"),
             "Fuel Status: " + safe(ambulance.getFuelStatus()),
+            "Operational Cost: " + String.format("%.2f", ambulance.getOperationalCost()),
+            "Service Fee: " + String.format("%.2f", ambulance.getServiceFee()),
             "Last Service: " + valueOrNA(ambulance.getLastServiceDate()),
             "Equipment List: " + safe(ambulance.getEquipmentList())
         );
         alert.setContentText(details);
         alert.showAndWait();
+    }
+
+    private Double parseAmountStrict(String raw) {
+        if (raw == null || raw.isBlank()) {
+            return 0.0;
+        }
+        try {
+            return Double.parseDouble(raw.trim());
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     private String safe(String value) {

@@ -16,6 +16,8 @@ public class Ambulance {
     private boolean equipped;
     private String equipmentList;
     private String fuelStatus;
+    private double operationalCost;
+    private double serviceFee;
 
     public Ambulance() {
         this.lastServiceDate = LocalDateTime.now();
@@ -69,4 +71,10 @@ public class Ambulance {
 
     public String getFuelStatus() { return fuelStatus; }
     public void setFuelStatus(String fuelStatus) { this.fuelStatus = fuelStatus; }
+
+    public double getOperationalCost() { return operationalCost; }
+    public void setOperationalCost(double operationalCost) { this.operationalCost = operationalCost; }
+
+    public double getServiceFee() { return serviceFee; }
+    public void setServiceFee(double serviceFee) { this.serviceFee = serviceFee; }
 }

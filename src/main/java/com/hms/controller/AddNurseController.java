@@ -19,6 +19,7 @@ public class AddNurseController {
     @FXML private TextField floorField;
     @FXML private TextField roomNumberField;
     @FXML private TextField workingHoursField;
+    @FXML private TextField salaryField;
     @FXML private TextArea descriptionArea;
     @FXML private Label statusLabel;
 
@@ -54,6 +55,7 @@ public class AddNurseController {
         String floor = floorField.getText().trim();
         String roomNumber = roomNumberField.getText().trim();
         String workingHours = workingHoursField.getText().trim();
+        String salaryText = salaryField.getText().trim();
         String description = descriptionArea.getText().trim();
 
         // Validation
@@ -81,6 +83,12 @@ public class AddNurseController {
             return;
         }
 
+        Double salary = parseAmountStrict(salaryText);
+        if (salary == null || salary < 0) {
+            showStatus("Salary must be a valid number", "error");
+            return;
+        }
+
         // Create nurse object
         Nurse nurse = new Nurse();
         nurse.setFirstName(firstName);
@@ -92,6 +100,7 @@ public class AddNurseController {
         nurse.setFloor(floor);
         nurse.setRoomNumber(roomNumber);
         nurse.setWorkingHours(workingHours);
+        nurse.setSalary(salary);
         nurse.setDescription(description);
 
         // Save to database
@@ -118,8 +127,20 @@ public class AddNurseController {
         floorField.clear();
         roomNumberField.clear();
         workingHoursField.clear();
+        salaryField.clear();
         descriptionArea.clear();
         statusLabel.setText("");
+    }
+
+    private Double parseAmountStrict(String raw) {
+        if (raw == null || raw.isBlank()) {
+            return 0.0;
+        }
+        try {
+            return Double.parseDouble(raw.trim());
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     private void showStatus(String message, String type) {

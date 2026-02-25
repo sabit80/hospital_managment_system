@@ -15,6 +15,7 @@ public class Cleaner {
     private String assignedArea;
     private String shift;
     private String status;
+    private double salary;
 
     public Cleaner() {
         this.hireDate = LocalDate.now();
@@ -73,6 +74,9 @@ public class Cleaner {
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+
+    public double getSalary() { return salary; }
+    public void setSalary(double salary) { this.salary = salary; }
 
     public String getFullName() {
         return firstName + " " + lastName;

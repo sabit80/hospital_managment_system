@@ -125,6 +125,52 @@ public class AppointmentService {
         return appointments;
     }
 
+    public List<Appointment> getAppointmentsByDateRange(LocalDate startDate, LocalDate endDate) {
+        List<Appointment> appointments = new ArrayList<>();
+        String sql = """
+            SELECT a.id, a.patient_id, a.doctor_id, a.appointment_date, a.appointment_time, a.status, a.notes,
+                   p.first_name || ' ' || p.last_name AS patient_name,
+                   d.first_name || ' ' || d.last_name AS doctor_name
+            FROM appointments a
+            LEFT JOIN patients p ON a.patient_id = p.id
+            LEFT JOIN doctors d ON a.doctor_id = d.id
+            WHERE a.appointment_date BETWEEN ? AND ?
+            ORDER BY a.appointment_date ASC, a.appointment_time ASC
+        """;
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setDate(1, Date.valueOf(startDate));
+            pstmt.setDate(2, Date.valueOf(endDate));
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                try {
+                    Appointment appointment = new Appointment();
+                    appointment.setId(rs.getInt("id"));
+                    appointment.setPatientId(rs.getInt("patient_id"));
+                    appointment.setDoctorId(rs.getInt("doctor_id"));
+                    String dateValue = rs.getString("appointment_date");
+                    if (dateValue != null && !dateValue.isBlank()) {
+                        LocalDate parsedDate = parseDateSafely(dateValue);
+                        appointment.setAppointmentDate(parsedDate);
+                    }
+                    appointment.setAppointmentTime(rs.getString("appointment_time"));
+                    appointment.setStatus(rs.getString("status"));
+                    appointment.setNotes(rs.getString("notes"));
+                    appointment.setPatientName(rs.getString("patient_name"));
+                    appointment.setDoctorName(rs.getString("doctor_name"));
+                    appointments.add(appointment);
+                } catch (Exception e) {
+                    System.err.println("Skipping malformed appointment row: " + e.getMessage());
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching appointments by range: " + e.getMessage());
+        }
+
+        return appointments;
+    }
+
     public boolean deleteAppointment(int id) {
         String sql = "DELETE FROM appointments WHERE id = ?";
 
@@ -136,6 +182,52 @@ public class AppointmentService {
             System.err.println("Error deleting appointment: " + e.getMessage());
             return false;
         }
+    }
+
+    public List<Appointment> getAppointmentsByDoctorAndDate(int doctorId, LocalDate date) {
+        List<Appointment> appointments = new ArrayList<>();
+        String sql = """
+            SELECT a.id, a.patient_id, a.doctor_id, a.appointment_date, a.appointment_time, a.status, a.notes,
+                   p.first_name || ' ' || p.last_name AS patient_name,
+                   d.first_name || ' ' || d.last_name AS doctor_name
+            FROM appointments a
+            LEFT JOIN patients p ON a.patient_id = p.id
+            LEFT JOIN doctors d ON a.doctor_id = d.id
+            WHERE a.doctor_id = ? AND a.appointment_date = ?
+            ORDER BY a.appointment_time ASC
+        """;
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, doctorId);
+            pstmt.setDate(2, Date.valueOf(date));
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                try {
+                    Appointment appointment = new Appointment();
+                    appointment.setId(rs.getInt("id"));
+                    appointment.setPatientId(rs.getInt("patient_id"));
+                    appointment.setDoctorId(rs.getInt("doctor_id"));
+                    String dateValue = rs.getString("appointment_date");
+                    if (dateValue != null && !dateValue.isBlank()) {
+                        LocalDate parsedDate = parseDateSafely(dateValue);
+                        appointment.setAppointmentDate(parsedDate);
+                    }
+                    appointment.setAppointmentTime(rs.getString("appointment_time"));
+                    appointment.setStatus(rs.getString("status"));
+                    appointment.setNotes(rs.getString("notes"));
+                    appointment.setPatientName(rs.getString("patient_name"));
+                    appointment.setDoctorName(rs.getString("doctor_name"));
+                    appointments.add(appointment);
+                } catch (Exception e) {
+                    System.err.println("Skipping malformed appointment row: " + e.getMessage());
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching appointments by doctor/date: " + e.getMessage());
+        }
+
+        return appointments;
     }
 
     private LocalDate parseDateSafely(String raw) {
